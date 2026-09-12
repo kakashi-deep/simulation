@@ -1,0 +1,37 @@
+name: TEFAS Fon Verisini Güncelle
+
+on:
+  schedule:
+    # 06:30 ve 18:30 (UTC) - Türkiye saatiyle 09:30 ve 21:30 civarı
+    - cron: '30 6 * * *'
+    - cron: '30 18 * * *'
+  workflow_dispatch: {}  # Elle tetiklemek için (Actions sekmesinden "Run workflow")
+
+permissions:
+  contents: write
+
+jobs:
+  update-funds:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repo'yu çek
+        uses: actions/checkout@v4
+
+      - name: Python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Bağımlılıkları kur
+        run: pip install -r requirements.txt
+
+      - name: TEFAS verisini çek
+        run: python fetch_funds.py
+
+      - name: Değişiklik varsa commit ve push yap
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/funds.json
+          git diff --staged --quiet || git commit -m "chore: TEFAS fon verisini güncelle"
+          git push
