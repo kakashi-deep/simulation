@@ -20,7 +20,8 @@ OUTPUT_PATH = "data/funds.json"
 
 def _normalize_kod(bilgi, fallback=None):
     return (
-        bilgi.get("fonKodu")
+        bilgi.get("fonKod")
+        or bilgi.get("fonKodu")
         or bilgi.get("kod")
         or bilgi.get("code")
         or fallback
@@ -30,8 +31,8 @@ def _normalize_kod(bilgi, fallback=None):
 
 def _normalize_unvan(bilgi):
     return (
-        bilgi.get("fonUnvan")
-        or bilgi.get("unvan")
+        bilgi.get("unvan")
+        or bilgi.get("fonUnvan")
         or bilgi.get("name")
         or bilgi.get("title")
         or ""
@@ -40,7 +41,8 @@ def _normalize_unvan(bilgi):
 
 def _normalize_kurucu(bilgi):
     return (
-        bilgi.get("kurucu")
+        bilgi.get("kurucuAd")
+        or bilgi.get("kurucu")
         or bilgi.get("founder")
         or bilgi.get("kurucuUnvan")
         or ""
@@ -105,7 +107,6 @@ def build_fund_list():
                 "founder": kurucu,
                 "fundType": fon_tipi,
                 "price": fiyat_bilgi.get("fiyat") or fiyat_bilgi.get("sonFiyat"),
-                "dailyReturn": fiyat_bilgi.get("gunlukGetiri"),
             })
 
     return all_funds
