@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-09-14T13:10:07.226911+00:00",
-  "count": 1053,
+  "updatedAt": "2026-09-14T21:56:08.088426+00:00",
+  "count": 1051,
   "funds": [
     {
       "symbol": "AAL",
@@ -5169,13 +5169,6 @@
       "price": 0.765563
     },
     {
-      "symbol": "PNU",
-      "name": "PUSULA PORTFÖY İKİNCİ PARA PİYASASI (TL) FONU",
-      "founder": "PUSULA PORTFÖY YÖNETİMİ A.Ş.",
-      "fundType": "YAT",
-      "price": 1.2797
-    },
-    {
       "symbol": "PO9",
       "name": "PARDUS PORTFÖY ONDOKUZUNCU HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
       "founder": "PARDUS PORTFÖY YÖNETİMİ A.Ş.",
@@ -5335,13 +5328,6 @@
       "founder": "ASTRA PORTFÖY YÖNETİMİ A.Ş.",
       "fundType": "YAT",
       "price": 1.378413
-    },
-    {
-      "symbol": "PRY",
-      "name": "PUSULA PORTFÖY PARA PİYASASI (TL) FONU",
-      "founder": "PUSULA PORTFÖY YÖNETİMİ A.Ş.",
-      "fundType": "YAT",
-      "price": 3.279813
     },
     {
       "symbol": "PSE",
