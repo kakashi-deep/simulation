@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-09-15T11:58:56.564922+00:00",
-  "count": 1052,
+  "updatedAt": "2026-09-15T21:33:51.055816+00:00",
+  "count": 1051,
   "funds": [
     {
       "symbol": "AAL",
@@ -5125,13 +5125,6 @@
       "founder": "ATA PORTFÖY YÖNETİMİ A.Ş.",
       "fundType": "YAT",
       "price": 4.730486
-    },
-    {
-      "symbol": "PKM",
-      "name": "PUSULA PORTFÖY PARA PİYASASI KATILIM (TL) FONU",
-      "founder": "PUSULA PORTFÖY YÖNETİMİ A.Ş.",
-      "fundType": "YAT",
-      "price": 1.098305
     },
     {
       "symbol": "PKP",
