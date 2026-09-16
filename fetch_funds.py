@@ -1,5 +1,5 @@
 """
-TEFAS'tan tüm fonların güncel listesini + fiyat bilgisini çeker,
+TEFAS'tan sadece isminde 'Katılım' geçen fonları çeker (faizsiz fonlar),
 data/funds.json olarak yazar. GitHub Actions tarafından periyodik çalıştırılır.
 
 Günlük getiri TEFAS bulk endpoint'inde YOK. Bu yüzden bir önceki
@@ -17,6 +17,12 @@ from tefasmak import tum_fonlar, fonlar_son_fiyat_bulk
 
 FON_TIPLERI = ["YAT"]
 OUTPUT_PATH = "data/funds.json"
+
+# Fon isminde (unvanda) aranacak anahtar kelime. Türkçe büyük/küçük harf
+# farkını Python'un .upper()'ı tolere ettiği için "KATILIM" sabiti yeterli:
+#   "katılım".upper() == "KATILIM"
+#   "Katılım".upper() == "KATILIM"
+ISIM_FILTRE = "KATILIM"
 
 
 # --- Yardımcılar -------------------------------------------------------------
@@ -89,6 +95,11 @@ def _extract_price(fiyat_bilgi):
     return None
 
 
+def _is_katilim_fonu(unvan: str) -> bool:
+    """İsminde 'Katılım' geçiyor mu? Türkçe büyük/küçük harf duyarsız."""
+    return ISIM_FILTRE in (unvan or "").upper()
+
+
 def _load_previous():
     """Önceki funds.json'u döner: (kod -> kayıt sözlüğü, updatedAt)."""
     if not os.path.exists(OUTPUT_PATH):
@@ -111,12 +122,12 @@ def _load_previous():
 # --- Ana iş ------------------------------------------------------------------
 
 def build_fund_list(previous, prev_updated_at=None):
-    # Eski şemadan (priceDate alanı yokken) geçişte, dosyanın yazıldığı
-    # günü geçici olarak 'önceki tarih' kabul ediyoruz.
     prev_updated_date = (prev_updated_at or "")[:10] or None
 
     all_funds = []
     seen_symbols = set()
+    toplam_gorulen = 0
+    katilim_harici_atlanan = 0
 
     for fon_tipi in FON_TIPLERI:
         print(f"[{fon_tipi}] fon listesi çekiliyor...")
@@ -156,9 +167,17 @@ def build_fund_list(previous, prev_updated_at=None):
             kod = _normalize_kod(bilgi)
             if not kod or kod in seen_symbols:
                 continue
-            seen_symbols.add(kod)
 
             unvan = _normalize_unvan(bilgi) or kod
+
+            # ─── İsim filtresi: sadece 'Katılım' içeren fonlar ────────
+            if not _is_katilim_fonu(unvan):
+                katilim_harici_atlanan += 1
+                continue
+
+            seen_symbols.add(kod)
+            toplam_gorulen += 1
+
             kurucu = _normalize_kurucu(bilgi)
 
             fiyat_bilgi = fiyatlar.get(kod, {}) if isinstance(fiyatlar, dict) else {}
@@ -166,25 +185,21 @@ def build_fund_list(previous, prev_updated_at=None):
                 fiyat_bilgi = {}
 
             price = _extract_price(fiyat_bilgi)
-            price_date = fiyat_bilgi.get("tarih")  # "YYYY-MM-DD" bekleniyor
+            price_date = fiyat_bilgi.get("tarih")
 
-            # --- Günlük getiriyi önceki fiyatla karşılaştırarak hesapla ---
+            # ─── Günlük getiriyi önceki fiyatla karşılaştırarak hesapla ──
             prev = previous.get(kod) or {}
             prev_price = _to_float(prev.get("price"))
             prev_daily = _to_float(prev.get("dailyReturn"))
-            # Yeni şemada 'priceDate' var; eski şemada yoksa dosya updatedAt'ini kullan.
             prev_date = prev.get("priceDate") or prev_updated_date
 
             daily_return = None
             if price is not None and price_date and prev_date:
                 if price_date > prev_date and prev_price and prev_price > 0:
-                    # Yeni bir iş günü fiyatı geldi → delta hesapla.
                     daily_return = (price - prev_price) / prev_price * 100.0
                 elif price_date == prev_date:
-                    # Aynı gün tekrar tetiklendi → önceki değeri koru.
                     daily_return = prev_daily
             elif price is not None:
-                # Tarih bilgisi eksik ama önceki hesaplanmış değer varsa koru.
                 daily_return = prev_daily
 
             all_funds.append({
@@ -198,6 +213,9 @@ def build_fund_list(previous, prev_updated_at=None):
                 "portfolioSize": _to_float(fiyat_bilgi.get("portfoyBuyukluk")),
                 "investorCount": fiyat_bilgi.get("kisiSayisi"),
             })
+
+    print(f"Filtre: '{ISIM_FILTRE}' — {toplam_gorulen} fon eşleşti, "
+          f"{katilim_harici_atlanan} fon atlandı.")
 
     return all_funds
 
@@ -228,7 +246,8 @@ def main():
         sys.exit(1)
 
     if not funds:
-        print("HATA: Boş fon listesi döndü, dosya yazılmadı.", file=sys.stderr)
+        print("HATA: Filtreye uyan fon bulunamadı, dosya yazılmadı.",
+              file=sys.stderr)
         sys.exit(1)
 
     _sanity_check(funds)
@@ -236,6 +255,7 @@ def main():
     output = {
         "updatedAt": datetime.now(timezone.utc).isoformat(),
         "count": len(funds),
+        "filter": "Katılım",
         "funds": funds,
     }
 
