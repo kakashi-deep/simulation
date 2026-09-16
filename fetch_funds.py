@@ -1,9 +1,11 @@
 """
-TEFAS'tan tüm fonların güncel listesini + fiyat/getiri bilgisini çeker,
+TEFAS'tan tüm fonların güncel listesini + fiyat bilgisini çeker,
 data/funds.json olarak yazar. GitHub Actions tarafından periyodik çalıştırılır.
 
-Kullanılan kütüphane: tefasmak (Akamai TSPD korumasını curl_cffi ile aşar)
-https://pypi.org/project/tefasmak/
+Günlük getiri TEFAS bulk endpoint'inde YOK. Bu yüzden bir önceki
+funds.json'daki fiyatla karşılaştırıp kendimiz hesaplıyoruz.
+'priceDate' alanı (TEFAS 'tarih') sayesinde aynı gün tekrar tetiklenirse
+yanlış hesap yapmıyoruz.
 """
 
 import json
@@ -13,13 +15,11 @@ from datetime import datetime, timezone
 
 from tefasmak import tum_fonlar, fonlar_son_fiyat_bulk
 
-# Şimdilik sadece Yatırım Fonları (YAT). İstenirse "EMK", "BYF" eklenebilir.
 FON_TIPLERI = ["YAT"]
-
 OUTPUT_PATH = "data/funds.json"
 
 
-# --- Alan normalizasyon yardımcıları ----------------------------------------
+# --- Yardımcılar -------------------------------------------------------------
 
 def _normalize_kod(bilgi, fallback=None):
     if not isinstance(bilgi, dict):
@@ -68,7 +68,6 @@ def _to_float(value):
         s = value.strip().replace("%", "").replace(" ", "")
         if not s:
             return None
-        # 1.234,56 -> 1234.56
         if "," in s and "." in s:
             s = s.replace(".", "").replace(",", ".")
         elif "," in s:
@@ -81,7 +80,6 @@ def _to_float(value):
 
 
 def _extract_price(fiyat_bilgi):
-    """Fiyat alanı için birden fazla olası anahtarı dene."""
     if not isinstance(fiyat_bilgi, dict):
         return None
     for key in ("fiyat", "sonFiyat", "price", "birimPayDegeri", "payDegeri"):
@@ -91,27 +89,32 @@ def _extract_price(fiyat_bilgi):
     return None
 
 
-def _extract_daily_return(fiyat_bilgi):
-    """Günlük getiri (%) için birden fazla olası anahtarı dene."""
-    if not isinstance(fiyat_bilgi, dict):
-        return None
-    for key in (
-        "gunlukGetiri",
-        "gunlukGetiriYuzde",
-        "gunlukGetiriYüzde",
-        "dailyReturn",
-        "getiri",
-        "gunlukDegisim",
-    ):
-        val = _to_float(fiyat_bilgi.get(key))
-        if val is not None:
-            return val
-    return None
+def _load_previous():
+    """Önceki funds.json'u döner: (kod -> kayıt sözlüğü, updatedAt)."""
+    if not os.path.exists(OUTPUT_PATH):
+        return {}, None
+    try:
+        with open(OUTPUT_PATH, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        funds = data.get("funds", [])
+        prev = {
+            f["symbol"]: f
+            for f in funds
+            if isinstance(f, dict) and f.get("symbol")
+        }
+        return prev, data.get("updatedAt")
+    except Exception as e:
+        print(f"UYARI: Önceki funds.json okunamadı: {e}")
+        return {}, None
 
 
 # --- Ana iş ------------------------------------------------------------------
 
-def build_fund_list():
+def build_fund_list(previous, prev_updated_at=None):
+    # Eski şemadan (priceDate alanı yokken) geçişte, dosyanın yazıldığı
+    # günü geçici olarak 'önceki tarih' kabul ediyoruz.
+    prev_updated_date = (prev_updated_at or "")[:10] or None
+
     all_funds = []
     seen_symbols = set()
 
@@ -119,10 +122,9 @@ def build_fund_list():
         print(f"[{fon_tipi}] fon listesi çekiliyor...")
         liste = tum_fonlar(fon_tipi)
 
-        print(f"[{fon_tipi}] güncel fiyat/getiri çekiliyor...")
+        print(f"[{fon_tipi}] güncel fiyat çekiliyor...")
         fiyatlar = fonlar_son_fiyat_bulk(fon_tipi)
 
-        # Bulk bazen liste döner; koda göre sözlüğe çevir.
         if not isinstance(fiyatlar, dict):
             fiyatlar = {
                 _normalize_kod(row): row
@@ -130,7 +132,6 @@ def build_fund_list():
                 if isinstance(row, dict)
             }
 
-        # tum_fonlar hem liste hem sözlük döndürebilir.
         if isinstance(liste, dict):
             items = [
                 ({"fonKodu": kod, **bilgi} if isinstance(bilgi, dict) else {"fonKodu": kod})
@@ -141,14 +142,12 @@ def build_fund_list():
         else:
             raise TypeError(f"tum_fonlar() beklenmeyen tip döndürdü: {type(liste)}")
 
-        # --- Debug: gerçek alan adlarını logla (ilk kayıtlardan) ---
         if items:
             print(f"[{fon_tipi}] örnek kayıt alanları: {list(items[0].keys())}")
         if fiyatlar:
             ornek_fiyat = next(iter(fiyatlar.values()))
             if isinstance(ornek_fiyat, dict):
                 print(f"[{fon_tipi}] örnek fiyat alanları: {list(ornek_fiyat.keys())}")
-                print(f"[{fon_tipi}] örnek fiyat değeri: {ornek_fiyat}")
 
         for bilgi in items:
             if not isinstance(bilgi, dict):
@@ -166,40 +165,64 @@ def build_fund_list():
             if not isinstance(fiyat_bilgi, dict):
                 fiyat_bilgi = {}
 
+            price = _extract_price(fiyat_bilgi)
+            price_date = fiyat_bilgi.get("tarih")  # "YYYY-MM-DD" bekleniyor
+
+            # --- Günlük getiriyi önceki fiyatla karşılaştırarak hesapla ---
+            prev = previous.get(kod) or {}
+            prev_price = _to_float(prev.get("price"))
+            prev_daily = _to_float(prev.get("dailyReturn"))
+            # Yeni şemada 'priceDate' var; eski şemada yoksa dosya updatedAt'ini kullan.
+            prev_date = prev.get("priceDate") or prev_updated_date
+
+            daily_return = None
+            if price is not None and price_date and prev_date:
+                if price_date > prev_date and prev_price and prev_price > 0:
+                    # Yeni bir iş günü fiyatı geldi → delta hesapla.
+                    daily_return = (price - prev_price) / prev_price * 100.0
+                elif price_date == prev_date:
+                    # Aynı gün tekrar tetiklendi → önceki değeri koru.
+                    daily_return = prev_daily
+            elif price is not None:
+                # Tarih bilgisi eksik ama önceki hesaplanmış değer varsa koru.
+                daily_return = prev_daily
+
             all_funds.append({
                 "symbol": kod,
                 "name": unvan,
                 "founder": kurucu,
                 "fundType": fon_tipi,
-                "price": _extract_price(fiyat_bilgi),
-                "dailyReturn": _extract_daily_return(fiyat_bilgi),
+                "price": price,
+                "priceDate": price_date,
+                "dailyReturn": daily_return,
+                "portfolioSize": _to_float(fiyat_bilgi.get("portfoyBuyukluk")),
+                "investorCount": fiyat_bilgi.get("kisiSayisi"),
             })
 
     return all_funds
 
 
 def _sanity_check(funds):
-    """Kaç fonun fiyatı ve günlük getirisi dolu geldi, logla."""
     with_price = sum(1 for f in funds if f.get("price") is not None)
+    with_date = sum(1 for f in funds if f.get("priceDate"))
     with_daily = sum(1 for f in funds if f.get("dailyReturn") is not None)
-    print(f"Özet: {len(funds)} fon — "
-          f"fiyat dolu: {with_price}, günlük getiri dolu: {with_daily}")
+    print(f"Özet: {len(funds)} fon — fiyat dolu: {with_price}, "
+          f"tarih dolu: {with_date}, günlük getiri dolu: {with_daily}")
 
-    ornek = next(
-        (f for f in funds if f.get("price") is not None and f.get("dailyReturn") is not None),
-        None,
-    )
+    ornek = next((f for f in funds if f.get("dailyReturn") is not None), None)
     if ornek:
-        print(f"Örnek dolu kayıt: {ornek['symbol']} "
-              f"fiyat={ornek['price']} gunluk={ornek['dailyReturn']}")
-    else:
-        print("UYARI: Fiyat + gunlukGetiri birlikte dolu tek kayıt bile yok! "
-              "tefasmak sürümü alan adını değiştirmiş olabilir.")
+        print(f"Örnek günlük getiri: {ornek['symbol']} "
+              f"fiyat={ornek['price']} tarih={ornek.get('priceDate')} "
+              f"gunluk={ornek['dailyReturn']:.4f}%")
 
 
 def main():
+    previous, prev_updated_at = _load_previous()
+    print(f"Önceki funds.json: {len(previous)} fon "
+          f"(updatedAt={prev_updated_at})")
+
     try:
-        funds = build_fund_list()
+        funds = build_fund_list(previous, prev_updated_at)
     except Exception as e:
         print(f"HATA: Fon verisi çekilemedi: {e}", file=sys.stderr)
         sys.exit(1)
