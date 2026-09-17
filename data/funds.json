@@ -1,19 +1,8 @@
 {
-  "updatedAt": "2026-09-17T11:58:03.802697+00:00",
-  "count": 187,
+  "updatedAt": "2026-09-17T21:33:23.544908+00:00",
+  "count": 161,
   "filter": "Katılım",
   "funds": [
-    {
-      "symbol": "AC1",
-      "name": "PARDUS PORTFÖY KISA VADELİ KATILIM SERBEST FONU",
-      "founder": "PARDUS PORTFÖY YÖNETİMİ A.Ş.",
-      "fundType": "YAT",
-      "price": 3.315661,
-      "priceDate": "2026-09-17",
-      "dailyReturn": 0.09116593074830023,
-      "portfolioSize": 339354277.28,
-      "investorCount": 194
-    },
     {
       "symbol": "AIS",
       "name": "AK PORTFÖY PARA PİYASASI KATILIM FONU",
@@ -35,17 +24,6 @@
       "dailyReturn": 1.379539311866971,
       "portfolioSize": 61773353.08,
       "investorCount": 126
-    },
-    {
-      "symbol": "BCO",
-      "name": "BULLS PORTFÖY ÇOKLU VARLIK KATILIM FONU",
-      "founder": "BULLS PORTFÖY YÖNETİMİ ANONİM ŞİRKETİ",
-      "fundType": "YAT",
-      "price": 1.932795,
-      "priceDate": "2026-09-17",
-      "dailyReturn": -2.5409114424970656,
-      "portfolioSize": 107798184.87,
-      "investorCount": 1345
     },
     {
       "symbol": "BDA",
@@ -79,17 +57,6 @@
       "dailyReturn": -0.4917060387592474,
       "portfolioSize": 317335160.43,
       "investorCount": 2146
-    },
-    {
-      "symbol": "BVK",
-      "name": "BULLS PORTFÖY VOLTRAN KATILIM SERBEST (TL) FON",
-      "founder": "BULLS PORTFÖY YÖNETİMİ ANONİM ŞİRKETİ",
-      "fundType": "YAT",
-      "price": 0.74138,
-      "priceDate": "2026-09-17",
-      "dailyReturn": -2.1327039243019406,
-      "portfolioSize": 160302.7,
-      "investorCount": 28
     },
     {
       "symbol": "CKF",
@@ -134,17 +101,6 @@
       "dailyReturn": 0.06121609491279295,
       "portfolioSize": 174676303.72,
       "investorCount": 1855
-    },
-    {
-      "symbol": "CVL",
-      "name": "A1 CAPİTAL PORTFÖY ÇOKLU VARLIK KATILIM FONU",
-      "founder": "A1 CAPİTAL PORTFÖY YÖNETİMİ A.Ş.",
-      "fundType": "YAT",
-      "price": 1.569618,
-      "priceDate": "2026-09-17",
-      "dailyReturn": -1.6541166828945526,
-      "portfolioSize": 171664947.93,
-      "investorCount": 2193
     },
     {
       "symbol": "DKH",
@@ -367,17 +323,6 @@
       "investorCount": 4388
     },
     {
-      "symbol": "GLL",
-      "name": "GOLDEN GLOBAL PORTFÖY ALTIN KATILIM FONU",
-      "founder": "GOLDEN GLOBAL PORTFÖY YÖNETİMİ A.Ş.",
-      "fundType": "YAT",
-      "price": 1.010289,
-      "priceDate": "2026-09-17",
-      "dailyReturn": null,
-      "portfolioSize": 8658823.45,
-      "investorCount": 38
-    },
-    {
       "symbol": "GLS",
       "name": "AZİMUT PORTFÖY  KİRA SERTİFİKALARI (SUKUK) KATILIM FONU",
       "founder": "AZİMUT PORTFÖY YÖNETİMİ A.Ş.",
@@ -389,17 +334,6 @@
       "investorCount": 1453
     },
     {
-      "symbol": "GOK",
-      "name": "GOLDEN GLOBAL PORTFÖY KISA VADELİ KİRA SERTİFİKALARI KATILIM FONU",
-      "founder": "GOLDEN GLOBAL PORTFÖY YÖNETİMİ A.Ş.",
-      "fundType": "YAT",
-      "price": 1.01753,
-      "priceDate": "2026-09-17",
-      "dailyReturn": null,
-      "portfolioSize": 53113458.89,
-      "investorCount": 14
-    },
-    {
       "symbol": "GOL",
       "name": "GARANTİ PORTFÖY ALTIN KATILIM FONU",
       "founder": "GARANTİ PORTFÖY YÖNETİMİ A.Ş.",
@@ -409,17 +343,6 @@
       "dailyReturn": 1.0877250778821699,
       "portfolioSize": 4910055649.62,
       "investorCount": 11794
-    },
-    {
-      "symbol": "GOP",
-      "name": "GOLDEN GLOBAL PORTFÖY PARA PİYASASI KATILIM FONU",
-      "founder": "GOLDEN GLOBAL PORTFÖY YÖNETİMİ A.Ş.",
-      "fundType": "YAT",
-      "price": 1.253784,
-      "priceDate": "2026-09-17",
-      "dailyReturn": null,
-      "portfolioSize": 395974802.97,
-      "investorCount": 1136
     },
     {
       "symbol": "GPF",
@@ -455,39 +378,6 @@
       "investorCount": 2541
     },
     {
-      "symbol": "HAM",
-      "name": "HEDEF PORTFÖY ALTIN KATILIM FONU",
-      "founder": "HEDEF PORTFÖY YÖNETİMİ A.Ş",
-      "fundType": "YAT",
-      "price": 3.100582,
-      "priceDate": "2026-09-17",
-      "dailyReturn": 1.0434525867645545,
-      "portfolioSize": 1533575409.08,
-      "investorCount": 7348
-    },
-    {
-      "symbol": "HCV",
-      "name": "HEDEF PORTFÖY ATAK ÇOKLU VARLIK KATILIM FONU",
-      "founder": "HEDEF PORTFÖY YÖNETİMİ A.Ş",
-      "fundType": "YAT",
-      "price": 1.00477,
-      "priceDate": "2026-09-17",
-      "dailyReturn": 1.1920228333403788,
-      "portfolioSize": 143646197.15,
-      "investorCount": 582
-    },
-    {
-      "symbol": "HFI",
-      "name": "HEDEF PORTFÖY İKİNCİ KATILIM HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
-      "founder": "HEDEF PORTFÖY YÖNETİMİ A.Ş",
-      "fundType": "YAT",
-      "price": 1.666933,
-      "priceDate": "2026-09-17",
-      "dailyReturn": -4.821414500843337,
-      "portfolioSize": 57142791.51,
-      "investorCount": 129
-    },
-    {
       "symbol": "HFO",
       "name": "AHLATCI PORTFÖY KATILIM HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
       "founder": "AHLATCI PORTFÖY YÖNETİMİ ANONİM ŞİRKETİ",
@@ -497,39 +387,6 @@
       "dailyReturn": -4.499080993983957,
       "portfolioSize": 4909242.47,
       "investorCount": 188
-    },
-    {
-      "symbol": "HKH",
-      "name": "HEDEF PORTFÖY KATILIM HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
-      "founder": "HEDEF PORTFÖY YÖNETİMİ A.Ş",
-      "fundType": "YAT",
-      "price": 8.195365,
-      "priceDate": "2026-09-17",
-      "dailyReturn": -4.649788278438134,
-      "portfolioSize": 701124617.01,
-      "investorCount": 13067
-    },
-    {
-      "symbol": "HML",
-      "name": "HEDEF PORTFÖY KATILIM SERBEST (DÖVİZ) FON",
-      "founder": "HEDEF PORTFÖY YÖNETİMİ A.Ş",
-      "fundType": "YAT",
-      "price": 48.666906,
-      "priceDate": "2026-09-17",
-      "dailyReturn": 0.051932865346146134,
-      "portfolioSize": 78274488.29,
-      "investorCount": 41
-    },
-    {
-      "symbol": "HPH",
-      "name": "HEDEF PORTFÖY PARA PIYASASI KATILIM FONU",
-      "founder": "HEDEF PORTFÖY YÖNETİMİ A.Ş",
-      "fundType": "YAT",
-      "price": 2.437337,
-      "priceDate": "2026-09-17",
-      "dailyReturn": 0.0985651784830464,
-      "portfolioSize": 5628678321.58,
-      "investorCount": 8926
     },
     {
       "symbol": "IAT",
@@ -686,28 +543,6 @@
       "investorCount": 1228
     },
     {
-      "symbol": "KHC",
-      "name": "PARDUS PORTFÖY KATILIM HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
-      "founder": "PARDUS PORTFÖY YÖNETİMİ A.Ş.",
-      "fundType": "YAT",
-      "price": 1.98188,
-      "priceDate": "2026-09-17",
-      "dailyReturn": -5.9626693794583865,
-      "portfolioSize": 39444884.45,
-      "investorCount": 1404
-    },
-    {
-      "symbol": "KHJ",
-      "name": "ATLAS PORTFÖY KATILIM HİSSE SENEDİ FONU (HİSSE SENEDİ YOĞUN FON)",
-      "founder": "ATLAS PORTFÖY YÖNETİMİ A.Ş.",
-      "fundType": "YAT",
-      "price": 1.088288,
-      "priceDate": "2026-09-17",
-      "dailyReturn": -5.488304233229279,
-      "portfolioSize": 13787263.45,
-      "investorCount": 438
-    },
-    {
       "symbol": "KIK",
       "name": "KUVEYT TÜRK PORTFÖY İKİNCİ KATILIM FONU",
       "founder": "KUVEYT TÜRK PORTFÖY YÖNETİMİ A.Ş.",
@@ -750,17 +585,6 @@
       "dailyReturn": 0.16492473434850596,
       "portfolioSize": 3675509175.86,
       "investorCount": 1641
-    },
-    {
-      "symbol": "KLH",
-      "name": "ATLAS PORTFÖY KATILIM HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
-      "founder": "ATLAS PORTFÖY YÖNETİMİ A.Ş.",
-      "fundType": "YAT",
-      "price": 2.312199,
-      "priceDate": "2026-09-17",
-      "dailyReturn": -5.737299581602575,
-      "portfolioSize": 89486559.9,
-      "investorCount": 1854
     },
     {
       "symbol": "KLI",
@@ -1071,28 +895,6 @@
       "investorCount": 40406
     },
     {
-      "symbol": "KVK",
-      "name": "HEDEF PORTFÖY KATILIM İSTATİSTİKSEL ARBİTRAJ SERBEST FON",
-      "founder": "HEDEF PORTFÖY YÖNETİMİ A.Ş",
-      "fundType": "YAT",
-      "price": 1.302667,
-      "priceDate": "2026-09-17",
-      "dailyReturn": 0.09581841373269183,
-      "portfolioSize": 863463295.76,
-      "investorCount": 133
-    },
-    {
-      "symbol": "KVR",
-      "name": "ATLAS PORTFÖY KISA VADELİ KATILIM SERBEST FON",
-      "founder": "ATLAS PORTFÖY YÖNETİMİ A.Ş.",
-      "fundType": "YAT",
-      "price": 1.330913,
-      "priceDate": "2026-09-17",
-      "dailyReturn": 0.09957964453677813,
-      "portfolioSize": 106244983.87,
-      "investorCount": 42
-    },
-    {
       "symbol": "KZL",
       "name": "KUVEYT TÜRK PORTFÖY ALTIN KATILIM FONU",
       "founder": "KUVEYT TÜRK PORTFÖY YÖNETİMİ A.Ş.",
@@ -1379,17 +1181,6 @@
       "investorCount": 67
     },
     {
-      "symbol": "PA2",
-      "name": "PUSULA PORTFÖY ALTIN KATILIM FONU",
-      "founder": "PUSULA PORTFÖY YÖNETİMİ A.Ş.",
-      "fundType": "YAT",
-      "price": 1.09001,
-      "priceDate": "2026-09-17",
-      "dailyReturn": 1.029752525720637,
-      "portfolioSize": 31354589.94,
-      "investorCount": 377
-    },
-    {
       "symbol": "PBK",
       "name": "ASTRA PORTFÖY BİRİNCİ KATILIM SERBEST (DÖVİZ) FON",
       "founder": "ASTRA PORTFÖY YÖNETİMİ A.Ş.",
@@ -1434,17 +1225,6 @@
       "investorCount": 150
     },
     {
-      "symbol": "PKD",
-      "name": "PUSULA PORTFÖY İKİNCİ KATILIM HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
-      "founder": "PUSULA PORTFÖY YÖNETİMİ A.Ş.",
-      "fundType": "YAT",
-      "price": 0.878093,
-      "priceDate": "2026-09-17",
-      "dailyReturn": -4.162905804733503,
-      "portfolioSize": 5506067.66,
-      "investorCount": 94
-    },
-    {
       "symbol": "PKF",
       "name": "ATA PORTFÖY ALTIN KATILIM FONU",
       "founder": "ATA PORTFÖY YÖNETİMİ A.Ş.",
@@ -1454,17 +1234,6 @@
       "dailyReturn": 1.0670844394206613,
       "portfolioSize": 388389834.56,
       "investorCount": 1529
-    },
-    {
-      "symbol": "PKM",
-      "name": "PUSULA PORTFÖY PARA PİYASASI KATILIM (TL) FONU",
-      "founder": "PUSULA PORTFÖY YÖNETİMİ A.Ş.",
-      "fundType": "YAT",
-      "price": 1.097606,
-      "priceDate": "2026-09-17",
-      "dailyReturn": null,
-      "portfolioSize": 342887145.6,
-      "investorCount": 348
     },
     {
       "symbol": "PKP",
@@ -1500,17 +1269,6 @@
       "investorCount": 1153
     },
     {
-      "symbol": "PP1",
-      "name": "PARDUS PORTFÖY BİRİNCİ KATILIM FONU",
-      "founder": "PARDUS PORTFÖY YÖNETİMİ A.Ş.",
-      "fundType": "YAT",
-      "price": 1.61384,
-      "priceDate": "2026-09-17",
-      "dailyReturn": -3.880251746735692,
-      "portfolioSize": 31191552.42,
-      "investorCount": 246
-    },
-    {
       "symbol": "PPG",
       "name": "ALBARAKA PORTFÖY PARA PİYASASI KATILIM FONU",
       "founder": "ALBARAKA PORTFÖY YÖNETİMİ A.Ş.",
@@ -1542,17 +1300,6 @@
       "dailyReturn": 0.10098143152853724,
       "portfolioSize": 642375904.44,
       "investorCount": 159
-    },
-    {
-      "symbol": "PUK",
-      "name": "PUSULA PORTFÖY KATILIM HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
-      "founder": "PUSULA PORTFÖY YÖNETİMİ A.Ş.",
-      "fundType": "YAT",
-      "price": 1.402474,
-      "priceDate": "2026-09-17",
-      "dailyReturn": -4.051266649380756,
-      "portfolioSize": 408936944.6,
-      "investorCount": 4768
     },
     {
       "symbol": "PVK",
@@ -1720,17 +1467,6 @@
       "investorCount": 881
     },
     {
-      "symbol": "TAL",
-      "name": "ATLAS PORTFÖY ALTIN KATILIM FONU",
-      "founder": "ATLAS PORTFÖY YÖNETİMİ A.Ş.",
-      "fundType": "YAT",
-      "price": 2.747202,
-      "priceDate": "2026-09-17",
-      "dailyReturn": 1.0278933426888612,
-      "portfolioSize": 32715399.56,
-      "investorCount": 725
-    },
-    {
       "symbol": "TCA",
       "name": "ZİRAAT PORTFÖY ALTIN KATILIM FONU",
       "founder": "ZİRAAT PORTFÖY YÖNETİMİ A.Ş.",
@@ -1764,17 +1500,6 @@
       "investorCount": 1298
     },
     {
-      "symbol": "TLV",
-      "name": "TERA PORTFÖY PARA PİYASASI KATILIM (TL) FONU",
-      "founder": "TERA PORTFÖY YÖNETİMİ A.Ş.",
-      "fundType": "YAT",
-      "price": 1.394777,
-      "priceDate": "2026-09-17",
-      "dailyReturn": -0.648488012872886,
-      "portfolioSize": 3626564860.91,
-      "investorCount": 12177
-    },
-    {
       "symbol": "TLZ",
       "name": "ATA PORTFÖY KATILIM HİSSE SENEDİ (TL) FONU (HİSSE SENEDİ YOĞUN FON)",
       "founder": "ATA PORTFÖY YÖNETİMİ A.Ş.",
@@ -1795,17 +1520,6 @@
       "dailyReturn": 0.001630748366355405,
       "portfolioSize": 153372818.33,
       "investorCount": 1496
-    },
-    {
-      "symbol": "TRU",
-      "name": "TERA PORTFÖY KATILIM SERBEST (DÖVİZ) FON",
-      "founder": "TERA PORTFÖY YÖNETİMİ A.Ş.",
-      "fundType": "YAT",
-      "price": 0.0,
-      "priceDate": "2026-09-17",
-      "dailyReturn": -100.0,
-      "portfolioSize": 0.0,
-      "investorCount": 306
     },
     {
       "symbol": "TVE",
