@@ -32,6 +32,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/funds.json
+          git add data/funds.json data/history.json
           git diff --staged --quiet || git commit -m "chore: TEFAS fon verisini güncelle"
           git push
