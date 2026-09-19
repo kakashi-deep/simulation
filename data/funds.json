@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-19T11:20:22.618787+00:00",
+  "updatedAt": "2026-09-19T13:34:45.942303+00:00",
   "count": 161,
   "filter": "Katılım",
   "funds": [
@@ -11,6 +11,9 @@
       "price": 0.11056,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.10049887278291336,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 10745719375.96,
       "investorCount": 24066
     },
@@ -22,6 +25,9 @@
       "price": 1.087294,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.3019314201477722,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 61884980.85,
       "investorCount": 124
     },
@@ -33,6 +39,9 @@
       "price": 57.100518,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.5451314000260227,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 5821068613.27,
       "investorCount": 806
     },
@@ -44,6 +53,9 @@
       "price": 50.72715,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.03316089379336095,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 8760268066.96,
       "investorCount": 1098
     },
@@ -55,6 +67,9 @@
       "price": 1.705245,
       "priceDate": "2026-09-18",
       "dailyReturn": 1.1430188128642442,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 315830540.98,
       "investorCount": 2123
     },
@@ -66,6 +81,9 @@
       "price": 2.123786,
       "priceDate": "2026-09-18",
       "dailyReturn": 1.0469692132529531,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 693556108.88,
       "investorCount": 2926
     },
@@ -77,6 +95,9 @@
       "price": 61.764081,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.029197767897899414,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 5834868204.16,
       "investorCount": 2385
     },
@@ -88,6 +109,9 @@
       "price": 3.846111,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.5024454627957013,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 1274209349.56,
       "investorCount": 17735
     },
@@ -99,6 +123,9 @@
       "price": 5.252538,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.10690062701440484,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 175120009.46,
       "investorCount": 1857
     },
@@ -110,6 +137,9 @@
       "price": 3.646304,
       "priceDate": "2026-09-18",
       "dailyReturn": 2.783057600224163,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 88780669.61,
       "investorCount": 1385
     },
@@ -121,6 +151,9 @@
       "price": 51.477765,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.0037299047737795613,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 406001065.15,
       "investorCount": 103
     },
@@ -132,6 +165,9 @@
       "price": 1.608195,
       "priceDate": "2026-09-18",
       "dailyReturn": 1.1308555085737046,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 608939817.07,
       "investorCount": 127
     },
@@ -143,6 +179,9 @@
       "price": 1.477392,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.10176910203335712,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 1466466208.78,
       "investorCount": 367
     },
@@ -154,6 +193,9 @@
       "price": 8.867589,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.08649056436815458,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 935852134.4,
       "investorCount": 1382
     },
@@ -165,6 +207,9 @@
       "price": 0.140859,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.17209867939155293,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 1153013448.38,
       "investorCount": 4787
     },
@@ -176,6 +221,9 @@
       "price": 13.31639,
       "priceDate": "2026-09-18",
       "dailyReturn": 3.797444082284742,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 236144119.42,
       "investorCount": 683
     },
@@ -187,6 +235,9 @@
       "price": 1.09872,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.0990312791251573,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 12894655611.41,
       "investorCount": 2162
     },
@@ -198,6 +249,9 @@
       "price": 1.416713,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.09884732292621483,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 615228570.33,
       "investorCount": 151
     },
@@ -209,6 +263,9 @@
       "price": 1.059698,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.8517741646902981,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 263629756.5,
       "investorCount": 320
     },
@@ -220,6 +277,9 @@
       "price": 1.369514,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.848458606530805,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 230990570.3,
       "investorCount": 1427
     },
@@ -231,6 +291,9 @@
       "price": 1.000848,
       "priceDate": "2026-09-18",
       "dailyReturn": null,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 25022597.75,
       "investorCount": 7
     },
@@ -242,6 +305,9 @@
       "price": 1.293343,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.825017930088248,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 20049754.98,
       "investorCount": 346
     },
@@ -253,6 +319,9 @@
       "price": 1.828713,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.12997701372896125,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 175565481.23,
       "investorCount": 5652
     },
@@ -264,6 +333,9 @@
       "price": 1.758372,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.38891045696408,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 425155432.31,
       "investorCount": 531
     },
@@ -275,6 +347,9 @@
       "price": 8.86048,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.9226288852253126,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 1757382368.09,
       "investorCount": 2237
     },
@@ -286,6 +361,9 @@
       "price": 1.575221,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.08265985564704664,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 190635411.02,
       "investorCount": 623
     },
@@ -297,6 +375,9 @@
       "price": 4.285762,
       "priceDate": "2026-09-18",
       "dailyReturn": 2.525874508633123,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 43124426.37,
       "investorCount": 670
     },
@@ -308,6 +389,9 @@
       "price": 4.611037,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.0990345112043364,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 4122617158.84,
       "investorCount": 1859
     },
@@ -319,6 +403,9 @@
       "price": 7.923081,
       "priceDate": "2026-09-18",
       "dailyReturn": 1.5161147977539855,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 248098720.67,
       "investorCount": 4375
     },
@@ -330,6 +417,9 @@
       "price": 0.174883,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.08756366966177202,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 1098346445.46,
       "investorCount": 1452
     },
@@ -341,6 +431,9 @@
       "price": 2.809422,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.04639370753320494,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 4902012526.59,
       "investorCount": 11772
     },
@@ -352,6 +445,9 @@
       "price": 9.123328,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.700874078211191,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 587491051.56,
       "investorCount": 3076
     },
@@ -363,6 +459,9 @@
       "price": 1.430991,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.09870031757577952,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 5364356804.29,
       "investorCount": 5100
     },
@@ -374,6 +473,9 @@
       "price": 1.433689,
       "priceDate": "2026-09-18",
       "dailyReturn": 1.603543997358015,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 1341193400.64,
       "investorCount": 2526
     },
@@ -385,6 +487,9 @@
       "price": 0.958076,
       "priceDate": "2026-09-18",
       "dailyReturn": 1.5371376005222785,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 5012455.47,
       "investorCount": 191
     },
@@ -396,6 +501,9 @@
       "price": 0.201194,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.09153773444108128,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 2191313254.52,
       "investorCount": 8973
     },
@@ -407,6 +515,9 @@
       "price": 1.507115,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.0742365356637465,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 44156045.24,
       "investorCount": 190
     },
@@ -418,6 +529,9 @@
       "price": 2.358441,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.07047751593275199,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 32844257.33,
       "investorCount": 130
     },
@@ -429,6 +543,9 @@
       "price": 6.089821,
       "priceDate": "2026-09-18",
       "dailyReturn": 1.775168201360976,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 74291073.13,
       "investorCount": 1268
     },
@@ -440,6 +557,9 @@
       "price": 57.901523,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.5485402421206711,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 17879999645.98,
       "investorCount": 5655
     },
@@ -451,6 +571,9 @@
       "price": 1.732954,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.20005851422439272,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 10906525.8,
       "investorCount": 164
     },
@@ -462,6 +585,9 @@
       "price": 1.074484,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.03135405802454843,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 86626921.91,
       "investorCount": 731
     },
@@ -473,6 +599,9 @@
       "price": 5.282682,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.8247014202957892,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 2797281659.33,
       "investorCount": 13504
     },
@@ -484,6 +613,9 @@
       "price": 1.798607,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.5860318724386693,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 721749933.63,
       "investorCount": 4056
     },
@@ -495,6 +627,9 @@
       "price": 53.466264,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.02448685227771932,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 25587742192.18,
       "investorCount": 7015
     },
@@ -506,6 +641,9 @@
       "price": 56.952331,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.5188024693803427,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 1150828920.63,
       "investorCount": 501
     },
@@ -517,6 +655,9 @@
       "price": 55.466483,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.013519851278752212,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 3279385096.17,
       "investorCount": 1194
     },
@@ -528,6 +669,9 @@
       "price": 2.996075,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.8051084973618344,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 2929582932.62,
       "investorCount": 30127
     },
@@ -539,6 +683,9 @@
       "price": 1.294982,
       "priceDate": "2026-09-18",
       "dailyReturn": 2.963317516251744,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 92064777.55,
       "investorCount": 1228
     },
@@ -550,6 +697,9 @@
       "price": 1.429664,
       "priceDate": "2026-09-18",
       "dailyReturn": 2.158626036564245,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 155748866.56,
       "investorCount": 1352
     },
@@ -561,6 +711,9 @@
       "price": 0.222448,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.09790448474396449,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 90022541.92,
       "investorCount": 753
     },
@@ -572,6 +725,9 @@
       "price": 57.844506,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.5633359887249164,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 42500614.64,
       "investorCount": 52
     },
@@ -583,6 +739,9 @@
       "price": 2.575088,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.11722062320937197,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 3456298092.15,
       "investorCount": 1404
     },
@@ -594,6 +753,9 @@
       "price": 1.348762,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.08526186672286976,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 95213855.1,
       "investorCount": 158
     },
@@ -605,6 +767,9 @@
       "price": 41.30452,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.2026076113737934,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 213998.72,
       "investorCount": 2
     },
@@ -616,6 +781,9 @@
       "price": 4.975176,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.09637078488471217,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 91541913932.07,
       "investorCount": 109910
     },
@@ -627,6 +795,9 @@
       "price": 1.634086,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.07191508149764783,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 145173441.18,
       "investorCount": 1247
     },
@@ -638,6 +809,9 @@
       "price": 3.464602,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.19497608347359424,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 1784444364.92,
       "investorCount": 2220
     },
@@ -649,6 +823,9 @@
       "price": 0.948668,
       "priceDate": "2026-09-18",
       "dailyReturn": -1.0728333729597683,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 459684149.15,
       "investorCount": 4854
     },
@@ -660,6 +837,9 @@
       "price": 2.06814,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.08300086286111831,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 1222383761.64,
       "investorCount": 16270
     },
@@ -671,6 +851,9 @@
       "price": 1.637496,
       "priceDate": "2026-09-18",
       "dailyReturn": 2.1334880152686013,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 527138133.54,
       "investorCount": 14088
     },
@@ -682,6 +865,9 @@
       "price": 20.796547,
       "priceDate": "2026-09-18",
       "dailyReturn": 2.571712367403436,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 4657421039.62,
       "investorCount": 24899
     },
@@ -693,6 +879,9 @@
       "price": 48.975261,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.0692380290930668,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 304629847.65,
       "investorCount": 545
     },
@@ -704,6 +893,9 @@
       "price": 1.513707,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.09680983810141028,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 6291458321.21,
       "investorCount": 7099
     },
@@ -715,6 +907,9 @@
       "price": 3.804848,
       "priceDate": "2026-09-18",
       "dailyReturn": 1.8962020523063075,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 531448084.48,
       "investorCount": 6079
     },
@@ -726,6 +921,9 @@
       "price": 3.010502,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.10011667532836756,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 4817402703.33,
       "investorCount": 650
     },
@@ -737,6 +935,9 @@
       "price": 5.166516,
       "priceDate": "2026-09-18",
       "dailyReturn": 2.229431695952623,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 160091967.29,
       "investorCount": 3799
     },
@@ -748,6 +949,9 @@
       "price": 1.897029,
       "priceDate": "2026-09-18",
       "dailyReturn": 2.5611234947884913,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 8446050.32,
       "investorCount": 434
     },
@@ -759,6 +963,9 @@
       "price": 5.886942,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.09492703982192822,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 39062908263.82,
       "investorCount": 9747
     },
@@ -770,6 +977,9 @@
       "price": 1.996559,
       "priceDate": "2026-09-18",
       "dailyReturn": 1.0837641438410106,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 95388910.04,
       "investorCount": 575
     },
@@ -781,6 +991,9 @@
       "price": 2.664692,
       "priceDate": "2026-09-18",
       "dailyReturn": 1.5091759283068193,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 1517259599.62,
       "investorCount": 21119
     },
@@ -792,6 +1005,9 @@
       "price": 22.512761,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.6703663147019625,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 698032590.15,
       "investorCount": 5914
     },
@@ -803,6 +1019,9 @@
       "price": 8.240679,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.08149168402261404,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 407505434.41,
       "investorCount": 4266
     },
@@ -814,6 +1033,9 @@
       "price": 10.899818,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.09524818801617888,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 25093464333.55,
       "investorCount": 614
     },
@@ -825,6 +1047,9 @@
       "price": 14.947249,
       "priceDate": "2026-09-18",
       "dailyReturn": 3.054810291161693,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 140998116.6,
       "investorCount": 825
     },
@@ -836,6 +1061,9 @@
       "price": 71.506979,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.019541126093743498,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 5228362494.76,
       "investorCount": 1432
     },
@@ -847,6 +1075,9 @@
       "price": 7.903253,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.09096930498337,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 38494969962.0,
       "investorCount": 47082
     },
@@ -858,6 +1089,9 @@
       "price": 1.132784,
       "priceDate": "2026-09-18",
       "dailyReturn": 2.031746660818007,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 270119918.19,
       "investorCount": 2863
     },
@@ -869,6 +1103,9 @@
       "price": 1.410137,
       "priceDate": "2026-09-18",
       "dailyReturn": 2.248598025126051,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 94281525.43,
       "investorCount": 2049
     },
@@ -880,6 +1117,9 @@
       "price": 1.754283,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.9979567621156383,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 274824516.8,
       "investorCount": 2854
     },
@@ -891,6 +1131,9 @@
       "price": 12.096374,
       "priceDate": "2026-09-18",
       "dailyReturn": -1.2685166820521645,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 7546273443.85,
       "investorCount": 40267
     },
@@ -902,6 +1145,9 @@
       "price": 28.233433,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.04580411409309302,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 88639769251.08,
       "investorCount": 65314
     },
@@ -913,6 +1159,9 @@
       "price": 2.390974,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.02094941406453602,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 459233279.06,
       "investorCount": 5726
     },
@@ -924,6 +1173,9 @@
       "price": 1.037869,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.06258912932744028,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 137483981.03,
       "investorCount": 1337
     },
@@ -935,6 +1187,9 @@
       "price": 1.176387,
       "priceDate": "2026-09-18",
       "dailyReturn": 1.1637746441083763,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 73145142.45,
       "investorCount": 1660
     },
@@ -946,6 +1201,9 @@
       "price": 17.578396,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.21334041175571916,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 1508290341.86,
       "investorCount": 7955
     },
@@ -957,6 +1215,9 @@
       "price": 1.423215,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.027691466459941586,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 131138308.59,
       "investorCount": 109
     },
@@ -968,6 +1229,9 @@
       "price": 8.557261,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.09646726511385736,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 1509500970.41,
       "investorCount": 1887
     },
@@ -979,6 +1243,9 @@
       "price": 10.165134,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.0967277122286142,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 253355161.08,
       "investorCount": 1509
     },
@@ -990,6 +1257,9 @@
       "price": 23.38266,
       "priceDate": "2026-09-18",
       "dailyReturn": 2.608338107354826,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 139757676.1,
       "investorCount": 2437
     },
@@ -1001,6 +1271,9 @@
       "price": 1.674807,
       "priceDate": "2026-09-18",
       "dailyReturn": 1.3813054332113746,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 69318929.15,
       "investorCount": 980
     },
@@ -1012,6 +1285,9 @@
       "price": 1.075513,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.04191590053198613,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 120959845.76,
       "investorCount": 159
     },
@@ -1023,6 +1299,9 @@
       "price": 12.720635,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.08146253328292374,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 865336966.85,
       "investorCount": 1730
     },
@@ -1034,6 +1313,9 @@
       "price": 7.728771,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.09437305056903338,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 407107363.95,
       "investorCount": 1367
     },
@@ -1045,6 +1327,9 @@
       "price": 50.351932,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.02739870801741014,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 131255000.33,
       "investorCount": 15
     },
@@ -1056,6 +1341,9 @@
       "price": 0.92192,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.5795279988828358,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 37497698.83,
       "investorCount": 417
     },
@@ -1067,6 +1355,9 @@
       "price": 1.521556,
       "priceDate": "2026-09-18",
       "dailyReturn": 2.279027622051389,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 100026054.79,
       "investorCount": 825
     },
@@ -1078,6 +1369,9 @@
       "price": 58.109138,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.5543692696086663,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 54189269.6,
       "investorCount": 48
     },
@@ -1089,6 +1383,9 @@
       "price": 2.626367,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.09939937318937996,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 772011722.97,
       "investorCount": 314
     },
@@ -1100,6 +1397,9 @@
       "price": 1.898479,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.10091929356494352,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 1033962175.33,
       "investorCount": 2433
     },
@@ -1111,6 +1411,9 @@
       "price": 47.484747,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.022985292846043698,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 162271286.97,
       "investorCount": 19
     },
@@ -1122,6 +1425,9 @@
       "price": 51.907079,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.027425745209161096,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 45458454.78,
       "investorCount": 31
     },
@@ -1133,6 +1439,9 @@
       "price": 11.683914,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.011256056978416832,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 777132058.64,
       "investorCount": 3082
     },
@@ -1144,6 +1453,9 @@
       "price": 2.847392,
       "priceDate": "2026-09-18",
       "dailyReturn": 2.5574235301406105,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 42851695.75,
       "investorCount": 1391
     },
@@ -1155,6 +1467,9 @@
       "price": 1.022328,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.09506959858304521,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 93935901.86,
       "investorCount": 84
     },
@@ -1166,6 +1481,9 @@
       "price": 7.265747,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.5218574861438702,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 3137904628.3,
       "investorCount": 21134
     },
@@ -1177,6 +1495,9 @@
       "price": 8.620338,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.09326189756843334,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 4253774.59,
       "investorCount": 65
     },
@@ -1188,6 +1509,9 @@
       "price": 58.667804,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.10066252410309115,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 100470844.41,
       "investorCount": 107
     },
@@ -1199,6 +1523,9 @@
       "price": 6.041423,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.27605800915692474,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 822938032.59,
       "investorCount": 172
     },
@@ -1210,6 +1537,9 @@
       "price": 1.551832,
       "priceDate": "2026-09-18",
       "dailyReturn": 2.4060098774426453,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 80337472.02,
       "investorCount": 356
     },
@@ -1221,6 +1551,9 @@
       "price": 1.075885,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.09592000401915089,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 23723831.27,
       "investorCount": 141
     },
@@ -1232,6 +1565,9 @@
       "price": 4.746742,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.05381320179275752,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 387465536.41,
       "investorCount": 1519
     },
@@ -1243,6 +1579,9 @@
       "price": 1.293849,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.10289984131761724,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 389990423.44,
       "investorCount": 78
     },
@@ -1254,6 +1593,9 @@
       "price": 1.579887,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.09522397591460836,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 684017912.08,
       "investorCount": 190
     },
@@ -1265,6 +1607,9 @@
       "price": 1.640746,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.09858888556734742,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 8044483888.27,
       "investorCount": 1142
     },
@@ -1276,6 +1621,9 @@
       "price": 1.494724,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.09421978052884525,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 1791845707.89,
       "investorCount": 1662
     },
@@ -1287,6 +1635,9 @@
       "price": 2.315545,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.09739367101083911,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 5611399287.95,
       "investorCount": 3160
     },
@@ -1298,6 +1649,9 @@
       "price": 1.373317,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.10087956190279188,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 358114157.22,
       "investorCount": 154
     },
@@ -1309,6 +1663,9 @@
       "price": 5.930507,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.09568194100834733,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 39826607003.24,
       "investorCount": 8237
     },
@@ -1320,6 +1677,9 @@
       "price": 21.583831,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.16330496201593436,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 1804629551.23,
       "investorCount": 5291
     },
@@ -1331,6 +1691,9 @@
       "price": 32.793133,
       "priceDate": "2026-09-18",
       "dailyReturn": 2.7381084560141105,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 896971816.6,
       "investorCount": 5226
     },
@@ -1342,6 +1705,9 @@
       "price": 8.944391,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.008216765197053638,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 36786677.12,
       "investorCount": 1130
     },
@@ -1353,6 +1719,9 @@
       "price": 3.934289,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.20926763205880278,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 106338520.75,
       "investorCount": 932
     },
@@ -1364,6 +1733,9 @@
       "price": 6.772461,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.10101059369663096,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 1549957638.93,
       "investorCount": 3083
     },
@@ -1375,6 +1747,9 @@
       "price": 7.107749,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.09666400737373164,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 9385625684.05,
       "investorCount": 18592
     },
@@ -1386,6 +1761,9 @@
       "price": 1.726955,
       "priceDate": "2026-09-18",
       "dailyReturn": -1.0241147531212267,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 61589518.85,
       "investorCount": 138
     },
@@ -1397,6 +1775,9 @@
       "price": 3.46143,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.17119623368286369,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 57164438.57,
       "investorCount": 523
     },
@@ -1408,6 +1789,9 @@
       "price": 0.999591,
       "priceDate": "2026-09-18",
       "dailyReturn": 2.1032686414708914,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 7997109.61,
       "investorCount": 69
     },
@@ -1419,6 +1803,9 @@
       "price": 2.09046,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.09442237637948156,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 93891673.24,
       "investorCount": 145
     },
@@ -1430,6 +1817,9 @@
       "price": 2.672134,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.09630789758472293,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 738185153.75,
       "investorCount": 214
     },
@@ -1441,6 +1831,9 @@
       "price": 1.468105,
       "priceDate": "2026-09-18",
       "dailyReturn": 3.4235829763431895,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 14894532.18,
       "investorCount": 306
     },
@@ -1452,6 +1845,9 @@
       "price": 1.690608,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.09538205218837151,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 724830644.58,
       "investorCount": 72
     },
@@ -1463,6 +1859,9 @@
       "price": 2.186196,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.8122823173309972,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 90938918.86,
       "investorCount": 872
     },
@@ -1474,6 +1873,9 @@
       "price": 0.782854,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.07951605150390312,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 13614531605.81,
       "investorCount": 45121
     },
@@ -1485,6 +1887,9 @@
       "price": 1.353524,
       "priceDate": "2026-09-18",
       "dailyReturn": 3.9114062529988605,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 73294246.24,
       "investorCount": 1742
     },
@@ -1496,6 +1901,9 @@
       "price": 1.818931,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.0990572501377184,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 3256037203.03,
       "investorCount": 1232
     },
@@ -1507,6 +1915,9 @@
       "price": 18.258961,
       "priceDate": "2026-09-18",
       "dailyReturn": 1.410908169141247,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 71169487.39,
       "investorCount": 870
     },
@@ -1518,6 +1929,9 @@
       "price": 28.882831,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.0002942916151614025,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 153223590.4,
       "investorCount": 1486
     },
@@ -1529,6 +1943,9 @@
       "price": 1.078874,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.03078229684149723,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 217599402.27,
       "investorCount": 342
     },
@@ -1540,6 +1957,9 @@
       "price": 5.620175,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.09658485361418477,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 5117925030.08,
       "investorCount": 5829
     },
@@ -1551,6 +1971,9 @@
       "price": 1.008497,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.024299480685389244,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 392469922.9,
       "investorCount": 8045
     },
@@ -1562,6 +1985,9 @@
       "price": 0.906304,
       "priceDate": "2026-09-18",
       "dailyReturn": 2.287376260810783,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 51478832.48,
       "investorCount": 700
     },
@@ -1573,6 +1999,9 @@
       "price": 0.941028,
       "priceDate": "2026-09-18",
       "dailyReturn": 2.4243703972989525,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 56606882.03,
       "investorCount": 503
     },
@@ -1584,6 +2013,9 @@
       "price": 1.115184,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.08570949059843526,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 153581735.43,
       "investorCount": 559
     },
@@ -1595,6 +2027,9 @@
       "price": 1.114688,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.08664632049440324,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 9724826316.95,
       "investorCount": 1163
     },
@@ -1606,6 +2041,9 @@
       "price": 1.018523,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.002552650878834447,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 72805477.0,
       "investorCount": 692
     },
@@ -1617,6 +2055,9 @@
       "price": 1.141949,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.0983497059589287,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 6294270951.4,
       "investorCount": 3396
     },
@@ -1628,6 +2069,9 @@
       "price": 1.320362,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.49954368971205615,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 45634864.24,
       "investorCount": 161
     },
@@ -1639,6 +2083,9 @@
       "price": 4.164621,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.24325342428659888,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 399871120.93,
       "investorCount": 276
     },
@@ -1650,6 +2097,9 @@
       "price": 0.107767,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.0854423032272996,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 920919270.81,
       "investorCount": 7496
     },
@@ -1661,6 +2111,9 @@
       "price": 1.939286,
       "priceDate": "2026-09-18",
       "dailyReturn": 1.1272539734438007,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 1163875711.89,
       "investorCount": 7159
     },
@@ -1672,6 +2125,9 @@
       "price": 44.242661,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.02651488061243212,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 681407805.88,
       "investorCount": 375
     },
@@ -1683,6 +2139,9 @@
       "price": 2.329151,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.6627579721118653,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 208570895.68,
       "investorCount": 1903
     },
@@ -1694,6 +2153,9 @@
       "price": 1.721457,
       "priceDate": "2026-09-18",
       "dailyReturn": 2.1661667531178854,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 376310263.77,
       "investorCount": 2465
     },
@@ -1705,6 +2167,9 @@
       "price": 59.411396,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.007753803297741229,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 5535160353.2,
       "investorCount": 1490
     },
@@ -1716,6 +2181,9 @@
       "price": 4.196377,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.0997806876303976,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 55814178166.02,
       "investorCount": 4229
     },
@@ -1727,6 +2195,9 @@
       "price": 61.129758,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.5467736492386788,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 2897766540.14,
       "investorCount": 823
     },
@@ -1738,6 +2209,9 @@
       "price": 33.521471,
       "priceDate": "2026-09-18",
       "dailyReturn": 1.520920780995958,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 1264260578.83,
       "investorCount": 7570
     },
@@ -1749,6 +2223,9 @@
       "price": 23.573481,
       "priceDate": "2026-09-18",
       "dailyReturn": -0.0002290704385178813,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 751910783.77,
       "investorCount": 3429
     },
@@ -1760,6 +2237,9 @@
       "price": 10.956582,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.09279742863969803,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 1674609390.0,
       "investorCount": 6653
     },
@@ -1771,6 +2251,9 @@
       "price": 1.070516,
       "priceDate": "2026-09-18",
       "dailyReturn": 0.09939660742454659,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
       "portfolioSize": 2355801383.33,
       "investorCount": 2538
     }
