@@ -1,12 +1,16 @@
 """
-TEFAS'tan sadece isminde 'Katılım' geçen fonları çeker (faizsiz fonlar),
-data/funds.json olarak yazar. Ayrıca son 35 günün fiyat geçmişini
-data/history.json'da biriktirir; haftalık/aylık getiriler buradan hesaplanır.
+TEFAS'tan TÜM yatırım fonlarını (YAT) çeker, data/funds.json olarak yazar.
+Ayrıca son 35 günün fiyat geçmişini data/history.json'da biriktirir;
+haftalık/aylık getiriler buradan hesaplanır.
 
 Günlük getiri TEFAS bulk endpoint'inde YOK. Bu yüzden bir önceki
 funds.json'daki fiyatla karşılaştırıp kendimiz hesaplıyoruz.
 'priceDate' alanı (TEFAS 'tarih') sayesinde aynı gün tekrar tetiklenirse
 yanlış hesap yapmıyoruz.
+
+NOT: İleride tekrar sadece belirli fonları çekmek istersen, aşağıdaki
+ISIM_FILTRE sabitine bir metin yaz (örn. "KATILIM"). None olduğu sürece
+filtresiz çalışır.
 """
 
 import json
@@ -20,7 +24,10 @@ FON_TIPLERI = ["YAT"]
 OUTPUT_PATH = "data/funds.json"
 HISTORY_PATH = "data/history.json"
 HISTORY_MAX_ENTRIES = 35
-ISIM_FILTRE = "KATILIM"
+
+# None = filtre yok (tüm fonlar). Metin verilirse sadece isminde o metin
+# geçen fonlar JSON'a yazılır. Örn: "KATILIM" → sadece katılım fonları.
+ISIM_FILTRE = None
 
 
 # --- Yardımcılar -------------------------------------------------------------
@@ -93,9 +100,11 @@ def _extract_price(fiyat_bilgi):
     return None
 
 
-def _is_katilim_fonu(unvan: str) -> bool:
-    """İsminde 'Katılım' geçiyor mu? Türkçe büyük/küçük harf duyarsız."""
-    return ISIM_FILTRE in (unvan or "").upper()
+def _matches_filter(unvan: str) -> bool:
+    """ISIM_FILTRE None ise hepsi geçer. Değilse isminde arar (büyük/küçük duyarsız)."""
+    if not ISIM_FILTRE:
+        return True
+    return ISIM_FILTRE.upper() in (unvan or "").upper()
 
 
 # --- Geçmiş (history) yönetimi ----------------------------------------------
@@ -119,11 +128,9 @@ def _update_history_entry(history, kod, price, price_date):
     if price is None or not price_date:
         return
     entries = history.get(kod, [])
-    # Aynı tarihli kayıtları temizle (idempotent).
     entries = [e for e in entries if e.get("date") != price_date]
     entries.append({"date": price_date, "price": price})
     entries.sort(key=lambda x: x.get("date", ""))
-    # Sadece son N kaydı tut.
     entries = entries[-HISTORY_MAX_ENTRIES:]
     history[kod] = entries
 
@@ -140,19 +147,16 @@ def _compute_returns(entries):
 
     today_price = entries[-1]["price"]
 
-    # weeklyReturn: 7 kayıt öncesi (yaklaşık 1 hafta = 5-7 iş günü)
     if len(entries) >= 8:
         old = entries[-8]["price"]
         if old > 0:
             result["weeklyReturn"] = (today_price - old) / old * 100.0
 
-    # monthlyReturn: 30 kayıt öncesi
     if len(entries) >= 31:
         old = entries[-31]["price"]
         if old > 0:
             result["monthlyReturn"] = (today_price - old) / old * 100.0
 
-    # consecutiveUpDays: bugünden geriye doğru kaç gün üst üste artmış
     count = 0
     for i in range(len(entries) - 1, 0, -1):
         if entries[i]["price"] > entries[i - 1]["price"]:
@@ -172,7 +176,7 @@ def build_fund_list(previous, prev_updated_at, history):
     all_funds = []
     seen_symbols = set()
     toplam_gorulen = 0
-    katilim_harici_atlanan = 0
+    filtre_harici_atlanan = 0
 
     for fon_tipi in FON_TIPLERI:
         print(f"[{fon_tipi}] fon listesi çekiliyor...")
@@ -215,8 +219,9 @@ def build_fund_list(previous, prev_updated_at, history):
 
             unvan = _normalize_unvan(bilgi) or kod
 
-            if not _is_katilim_fonu(unvan):
-                katilim_harici_atlanan += 1
+            # ── Filtre (opsiyonel) ──
+            if not _matches_filter(unvan):
+                filtre_harici_atlanan += 1
                 continue
 
             seen_symbols.add(kod)
@@ -268,8 +273,11 @@ def build_fund_list(previous, prev_updated_at, history):
                 "investorCount": fiyat_bilgi.get("kisiSayisi"),
             })
 
-    print(f"Filtre: '{ISIM_FILTRE}' — {toplam_gorulen} fon eşleşti, "
-          f"{katilim_harici_atlanan} fon atlandı.")
+    if ISIM_FILTRE:
+        print(f"Filtre: '{ISIM_FILTRE}' — {toplam_gorulen} fon eşleşti, "
+              f"{filtre_harici_atlanan} fon atlandı.")
+    else:
+        print(f"Filtre yok — {toplam_gorulen} fon alındı.")
 
     return all_funds
 
@@ -286,7 +294,6 @@ def _sanity_check(funds):
 
 
 def main():
-    # Önceki funds.json'u yükle
     previous = {}
     prev_updated_at = None
     if os.path.exists(OUTPUT_PATH):
@@ -314,7 +321,7 @@ def main():
         sys.exit(1)
 
     if not funds:
-        print("HATA: Filtreye uyan fon bulunamadı, dosya yazılmadı.",
+        print("HATA: Fon listesi boş döndü, dosya yazılmadı.",
               file=sys.stderr)
         sys.exit(1)
 
@@ -324,7 +331,7 @@ def main():
     output = {
         "updatedAt": now,
         "count": len(funds),
-        "filter": "Katılım",
+        "filter": ISIM_FILTRE if ISIM_FILTRE else "Yok",
         "funds": funds,
     }
 
