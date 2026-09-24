@@ -3,14 +3,8 @@ TEFAS'tan TÜM yatırım fonlarını (YAT) çeker, data/funds.json olarak yazar.
 Ayrıca son 35 günün fiyat geçmişini data/history.json'da biriktirir;
 haftalık/aylık getiriler buradan hesaplanır.
 
-Günlük getiri TEFAS bulk endpoint'inde YOK. Bu yüzden bir önceki
-funds.json'daki fiyatla karşılaştırıp kendimiz hesaplıyoruz.
-'priceDate' alanı (TEFAS 'tarih') sayesinde aynı gün tekrar tetiklenirse
-yanlış hesap yapmıyoruz.
-
-NOT: İleride tekrar sadece belirli fonları çekmek istersen, aşağıdaki
-ISIM_FILTRE sabitine bir metin yaz (örn. "KATILIM"). None olduğu sürece
-filtresiz çalışır.
+funds.json'a her fon için son 7 günün fiyatları ('priceHistory') da
+eklenir; uygulama fon detay ekranında gün gün fiyatları gösterir.
 """
 
 import json
@@ -25,8 +19,10 @@ OUTPUT_PATH = "data/funds.json"
 HISTORY_PATH = "data/history.json"
 HISTORY_MAX_ENTRIES = 35
 
-# None = filtre yok (tüm fonlar). Metin verilirse sadece isminde o metin
-# geçen fonlar JSON'a yazılır. Örn: "KATILIM" → sadece katılım fonları.
+# Uygulamaya gönderilecek günlük fiyat listesinin uzunluğu (fon detayında
+# "Son 7 Gün" bölümü için).
+PRICE_HISTORY_DAYS = 7
+
 ISIM_FILTRE = None
 
 
@@ -70,7 +66,6 @@ def _normalize_kurucu(bilgi):
 
 
 def _to_float(value):
-    """TEFAS bazen '1.234,56' gibi TR formatında string döner; onu da yakala."""
     if value is None:
         return None
     if isinstance(value, (int, float)):
@@ -101,7 +96,6 @@ def _extract_price(fiyat_bilgi):
 
 
 def _matches_filter(unvan: str) -> bool:
-    """ISIM_FILTRE None ise hepsi geçer. Değilse isminde arar (büyük/küçük duyarsız)."""
     if not ISIM_FILTRE:
         return True
     return ISIM_FILTRE.upper() in (unvan or "").upper()
@@ -110,7 +104,6 @@ def _matches_filter(unvan: str) -> bool:
 # --- Geçmiş (history) yönetimi ----------------------------------------------
 
 def _load_history():
-    """{kod: [{date, price}, ...]} — en eskiden en yeniye sıralı."""
     if not os.path.exists(HISTORY_PATH):
         return {}
     try:
@@ -124,7 +117,6 @@ def _load_history():
 
 
 def _update_history_entry(history, kod, price, price_date):
-    """Bugünün fiyatını geçmişe ekler; aynı tarih varsa günceller."""
     if price is None or not price_date:
         return
     entries = history.get(kod, [])
@@ -136,7 +128,6 @@ def _update_history_entry(history, kod, price, price_date):
 
 
 def _compute_returns(entries):
-    """Bugünkü fiyatla geçmiş fiyatları karşılaştırarak getirileri hesaplar."""
     result = {
         "weeklyReturn": None,
         "monthlyReturn": None,
@@ -166,6 +157,95 @@ def _compute_returns(entries):
     result["consecutiveUpDays"] = count
 
     return result
+
+
+def _build_price_history(entries, days=PRICE_HISTORY_DAYS):
+    """
+    Son [days] günün fiyat listesini üretir. Her öğe:
+      { date: "2026-09-18", price: 3.5805, changePercent: 0.12 }
+    changePercent bir önceki güne göre değişimdir (ilk gün için None).
+    """
+    if not entries:
+        return []
+    tail = entries[-days:]
+    result = []
+    for i, e in enumerate(tail):
+        change = None
+        if i > 0:
+            prev = tail[i - 1]["price"]
+            if prev and prev > 0:
+                change = (e["price"] - prev) / prev * 100.0
+        result.append({
+            "date": e["date"],
+            "price": e["price"],
+            "changePercent": change,
+        })
+    return result
+
+
+# --- Backfill keşif ---------------------------------------------------------
+
+def _discover_history_function():
+    try:
+        import tefasmak
+    except ImportError:
+        print("Backfill: tefasmak import edilemedi.")
+        return None, None
+
+    candidates = [
+        "fon_gecmis_fiyat",
+        "gecmis_fiyat",
+        "fon_tarihsel_fiyat",
+        "fon_fiyat_gecmisi",
+        "fon_history",
+        "fon_historical",
+        "fon_gecmis",
+        "gecmis",
+    ]
+    for name in candidates:
+        if hasattr(tefasmak, name):
+            fn = getattr(tefasmak, name)
+            if callable(fn):
+                return fn, name
+    return None, None
+
+
+def _report_backfill_options():
+    try:
+        import tefasmak
+    except ImportError:
+        return
+    public_fns = []
+    for name in dir(tefasmak):
+        if name.startswith("_"):
+            continue
+        obj = getattr(tefasmak, name)
+        if callable(obj):
+            public_fns.append(name)
+    print(f"Backfill: tefasmak'ta geçmiş fiyat fonksiyonu bulunamadı.")
+    print(f"Backfill: kütüphanedeki mevcut fonksiyonlar: {public_fns}")
+
+
+def _try_backfill_test():
+    fn, name = _discover_history_function()
+    if fn is None:
+        _report_backfill_options()
+        return
+    print(f"Backfill: '{name}' fonksiyonu bulundu, test ediliyor...")
+    test_kod = "AAL"
+    try:
+        try:
+            result = fn(test_kod, 35)
+        except TypeError:
+            try:
+                result = fn(test_kod, gun_sayisi=35)
+            except TypeError:
+                result = fn(test_kod)
+        tip = type(result).__name__
+        ornek = str(result)[:300] if result is not None else "None"
+        print(f"Backfill test ({test_kod}): tip={tip}, örnek={ornek}")
+    except Exception as e:
+        print(f"Backfill test hatası: {type(e).__name__}: {e}")
 
 
 # --- Ana iş ------------------------------------------------------------------
@@ -219,7 +299,6 @@ def build_fund_list(previous, prev_updated_at, history):
 
             unvan = _normalize_unvan(bilgi) or kod
 
-            # ── Filtre (opsiyonel) ──
             if not _matches_filter(unvan):
                 filtre_harici_atlanan += 1
                 continue
@@ -236,10 +315,8 @@ def build_fund_list(previous, prev_updated_at, history):
             price = _extract_price(fiyat_bilgi)
             price_date = fiyat_bilgi.get("tarih")
 
-            # ── Geçmişi güncelle ──
             _update_history_entry(history, kod, price, price_date)
 
-            # ── Günlük getiri (önceki funds.json ile karşılaştırma) ──
             prev = previous.get(kod) or {}
             prev_price = _to_float(prev.get("price"))
             prev_daily = _to_float(prev.get("dailyReturn"))
@@ -254,9 +331,9 @@ def build_fund_list(previous, prev_updated_at, history):
             elif price is not None:
                 daily_return = prev_daily
 
-            # ── Haftalık/aylık getiri + üst üste artış ──
             entries = history.get(kod, [])
             returns = _compute_returns(entries)
+            price_history = _build_price_history(entries)
 
             all_funds.append({
                 "symbol": kod,
@@ -269,6 +346,7 @@ def build_fund_list(previous, prev_updated_at, history):
                 "weeklyReturn": returns["weeklyReturn"],
                 "monthlyReturn": returns["monthlyReturn"],
                 "consecutiveUpDays": returns["consecutiveUpDays"],
+                "priceHistory": price_history,
                 "portfolioSize": _to_float(fiyat_bilgi.get("portfoyBuyukluk")),
                 "investorCount": fiyat_bilgi.get("kisiSayisi"),
             })
@@ -287,10 +365,11 @@ def _sanity_check(funds):
     with_daily = sum(1 for f in funds if f.get("dailyReturn") is not None)
     with_weekly = sum(1 for f in funds if f.get("weeklyReturn") is not None)
     with_monthly = sum(1 for f in funds if f.get("monthlyReturn") is not None)
+    with_history = sum(1 for f in funds if f.get("priceHistory"))
     with_streak = sum(1 for f in funds if (f.get("consecutiveUpDays") or 0) >= 5)
     print(f"Özet: {len(funds)} fon — fiyat: {with_price}, günlük: {with_daily}, "
           f"haftalık: {with_weekly}, aylık: {with_monthly}, "
-          f"5+ gün üst üste artan: {with_streak}")
+          f"geçmiş: {with_history}, 5+ gün üst üste artan: {with_streak}")
 
 
 def main():
@@ -313,6 +392,8 @@ def main():
     print(f"Önceki funds.json: {len(previous)} fon "
           f"(updatedAt={prev_updated_at})")
     print(f"Önceki history: {len(history)} fonun geçmişi var")
+
+    _try_backfill_test()
 
     try:
         funds = build_fund_list(previous, prev_updated_at, history)
