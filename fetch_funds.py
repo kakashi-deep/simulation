@@ -5,6 +5,10 @@ haftalık/aylık getiriler buradan hesaplanır.
 
 funds.json'a her fon için son 7 günün fiyatları ('priceHistory') da
 eklenir; uygulama fon detay ekranında gün gün fiyatları gösterir.
+
+ÖNEMLİ: TEFAS bulk fiyat endpoint'i bazen boş döner. Bu durumda
+önceki funds.json'daki fiyat korunur; böylece uygulama veri göstermeye
+devam eder.
 """
 
 import json
@@ -19,8 +23,6 @@ OUTPUT_PATH = "data/funds.json"
 HISTORY_PATH = "data/history.json"
 HISTORY_MAX_ENTRIES = 35
 
-# Uygulamaya gönderilecek günlük fiyat listesinin uzunluğu (fon detayında
-# "Son 7 Gün" bölümü için).
 PRICE_HISTORY_DAYS = 7
 
 ISIM_FILTRE = None
@@ -160,11 +162,6 @@ def _compute_returns(entries):
 
 
 def _build_price_history(entries, days=PRICE_HISTORY_DAYS):
-    """
-    Son [days] günün fiyat listesini üretir. Her öğe:
-      { date: "2026-09-18", price: 3.5805, changePercent: 0.12 }
-    changePercent bir önceki güne göre değişimdir (ilk gün için None).
-    """
     if not entries:
         return []
     tail = entries[-days:]
@@ -193,10 +190,10 @@ def _discover_history_function():
         return None, None
 
     candidates = [
+        "fon_fiyat_gecmisi",
         "fon_gecmis_fiyat",
         "gecmis_fiyat",
         "fon_tarihsel_fiyat",
-        "fon_fiyat_gecmisi",
         "fon_history",
         "fon_historical",
         "fon_gecmis",
@@ -227,25 +224,35 @@ def _report_backfill_options():
 
 
 def _try_backfill_test():
+    """
+    Geçmiş fiyat fonksiyonu bulursa farklı parametreleri dener,
+    hangi çağrının veri döndürdüğünü loglar.
+    """
     fn, name = _discover_history_function()
     if fn is None:
         _report_backfill_options()
         return
-    print(f"Backfill: '{name}' fonksiyonu bulundu, test ediliyor...")
+
+    print(f"Backfill: '{name}' fonksiyonu bulundu, farklı parametreler deneniyor...")
     test_kod = "AAL"
+
+    # 1) Sadece kod
     try:
-        try:
-            result = fn(test_kod, 35)
-        except TypeError:
-            try:
-                result = fn(test_kod, gun_sayisi=35)
-            except TypeError:
-                result = fn(test_kod)
-        tip = type(result).__name__
-        ornek = str(result)[:300] if result is not None else "None"
-        print(f"Backfill test ({test_kod}): tip={tip}, örnek={ornek}")
+        r1 = fn(test_kod)
+        print(f"Backfill [{name}('{test_kod}')]: tip={type(r1).__name__}, "
+              f"len={len(r1) if hasattr(r1, '__len__') else 'N/A'}, "
+              f"örnek={str(r1)[:200]}")
     except Exception as e:
-        print(f"Backfill test hatası: {type(e).__name__}: {e}")
+        print(f"Backfill ['{test_kod}']: HATA {type(e).__name__}: {e}")
+
+    # 2) Kod + gün sayısı (int)
+    try:
+        r2 = fn(test_kod, 30)
+        print(f"Backfill [{name}('{test_kod}', 30)]: tip={type(r2).__name__}, "
+              f"len={len(r2) if hasattr(r2, '__len__') else 'N/A'}, "
+              f"örnek={str(r2)[:200]}")
+    except Exception as e:
+        print(f"Backfill ['{test_kod}', 30]: HATA {type(e).__name__}: {e}")
 
 
 # --- Ana iş ------------------------------------------------------------------
@@ -257,6 +264,8 @@ def build_fund_list(previous, prev_updated_at, history):
     seen_symbols = set()
     toplam_gorulen = 0
     filtre_harici_atlanan = 0
+    fiyat_gelmeyen = 0
+    eski_fiyat_korunan = 0
 
     for fon_tipi in FON_TIPLERI:
         print(f"[{fon_tipi}] fon listesi çekiliyor...")
@@ -271,6 +280,12 @@ def build_fund_list(previous, prev_updated_at, history):
                 for row in fiyatlar
                 if isinstance(row, dict)
             }
+
+        # ── Bulk endpoint sağlık kontrolü ──
+        bulk_bos = not fiyatlar
+        if bulk_bos:
+            print(f"[{fon_tipi}] ⚠️ UYARI: bulk fiyat endpoint'i BOŞ döndü! "
+                  f"Önceki funds.json'daki fiyatlar korunacak.")
 
         if isinstance(liste, dict):
             items = [
@@ -308,6 +323,12 @@ def build_fund_list(previous, prev_updated_at, history):
 
             kurucu = _normalize_kurucu(bilgi)
 
+            prev = previous.get(kod) or {}
+            prev_price = _to_float(prev.get("price"))
+            prev_daily = _to_float(prev.get("dailyReturn"))
+            prev_date = prev.get("priceDate") or prev_updated_date
+            prev_history = prev.get("priceHistory") or []
+
             fiyat_bilgi = fiyatlar.get(kod, {}) if isinstance(fiyatlar, dict) else {}
             if not isinstance(fiyat_bilgi, dict):
                 fiyat_bilgi = {}
@@ -315,13 +336,21 @@ def build_fund_list(previous, prev_updated_at, history):
             price = _extract_price(fiyat_bilgi)
             price_date = fiyat_bilgi.get("tarih")
 
-            _update_history_entry(history, kod, price, price_date)
+            # ═══════════════════════════════════════════════════════
+            # YENİ FİYAT GELMEZSE ESKİ FİYATI KORU
+            # ═══════════════════════════════════════════════════════
+            if price is None:
+                fiyat_gelmeyen += 1
+                if prev_price is not None:
+                    price = prev_price
+                    price_date = prev.get("priceDate")
+                    eski_fiyat_korunan += 1
 
-            prev = previous.get(kod) or {}
-            prev_price = _to_float(prev.get("price"))
-            prev_daily = _to_float(prev.get("dailyReturn"))
-            prev_date = prev.get("priceDate") or prev_updated_date
+            # ── Geçmişi güncelle (sadece yeni fiyat varsa) ──
+            if not bulk_bos and price is not None:
+                _update_history_entry(history, kod, price, price_date)
 
+            # ── Günlük getiri ──
             daily_return = None
             if price is not None and price_date and prev_date:
                 if price_date > prev_date and prev_price and prev_price > 0:
@@ -331,9 +360,16 @@ def build_fund_list(previous, prev_updated_at, history):
             elif price is not None:
                 daily_return = prev_daily
 
+            # ── Haftalık/aylık getiri + üst üste artış ──
             entries = history.get(kod, [])
             returns = _compute_returns(entries)
-            price_history = _build_price_history(entries)
+
+            # ── Fiyat geçmişi ──
+            # Yeni entry eklenmediyse eski priceHistory'yi koru
+            if not bulk_bos and price is not None:
+                price_history = _build_price_history(entries)
+            else:
+                price_history = prev_history
 
             all_funds.append({
                 "symbol": kod,
@@ -347,8 +383,10 @@ def build_fund_list(previous, prev_updated_at, history):
                 "monthlyReturn": returns["monthlyReturn"],
                 "consecutiveUpDays": returns["consecutiveUpDays"],
                 "priceHistory": price_history,
-                "portfolioSize": _to_float(fiyat_bilgi.get("portfoyBuyukluk")),
-                "investorCount": fiyat_bilgi.get("kisiSayisi"),
+                "portfolioSize": _to_float(fiyat_bilgi.get("portfoyBuyukluk"))
+                    if not bulk_bos else prev.get("portfolioSize"),
+                "investorCount": fiyat_bilgi.get("kisiSayisi")
+                    if not bulk_bos else prev.get("investorCount"),
             })
 
     if ISIM_FILTRE:
@@ -356,6 +394,10 @@ def build_fund_list(previous, prev_updated_at, history):
               f"{filtre_harici_atlanan} fon atlandı.")
     else:
         print(f"Filtre yok — {toplam_gorulen} fon alındı.")
+
+    if fiyat_gelmeyen > 0:
+        print(f"⚠️ {fiyat_gelmeyen} fon için fiyat gelmedi; "
+              f"{eski_fiyat_korunan} tanesi eski funds.json'dan korundu.")
 
     return all_funds
 
@@ -370,6 +412,9 @@ def _sanity_check(funds):
     print(f"Özet: {len(funds)} fon — fiyat: {with_price}, günlük: {with_daily}, "
           f"haftalık: {with_weekly}, aylık: {with_monthly}, "
           f"geçmiş: {with_history}, 5+ gün üst üste artan: {with_streak}")
+
+    if with_price == 0:
+        print("🚨 KRİTİK: Hiçbir fon için fiyat yok! Uygulama boş liste gösterecek.")
 
 
 def main():
