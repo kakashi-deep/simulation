@@ -7,8 +7,7 @@ funds.json'a her fon için son 7 günün fiyatları ('priceHistory') da
 eklenir; uygulama fon detay ekranında gün gün fiyatları gösterir.
 
 ZPK ÖZEL DURUM: ZPK fonu TEFAS'ta işlem görmediği için bulk endpoint'te
-gelmiyor. Ziraat Portföy sitesinden web kazıma ile çekilir.
-Site bot koruması kullandığı için curl_cffi (Chrome taklidi) kullanılır.
+gelmiyor. PiyasaDetay.com'dan web kazıma ile çekilir.
 
 ÖNEMLİ: TEFAS bulk fiyat endpoint'i bazen boş döner. Bu durumda:
   1) Önceki funds.json'daki fiyat korunur (fon bazında).
@@ -40,14 +39,13 @@ MIN_PRICE_RATIO = 0.5
 # TEFAS DIŞI FONLAR (manuel eklenenler)
 # ═══════════════════════════════════════════════════════════════════════════
 
-# TEFAS'ta işlem görmeyen, Ziraat Portföy sitesinden çekilen fonlar.
 EXTRA_FUNDS = [
     {
         "symbol": "ZPK",
         "name": "Ziraat Portföy Kısa Vadeli Kira Sertifikası Katılım (TL) Fonu",
         "founder": "Ziraat Portföy Yönetimi A.Ş.",
         "fundType": "YAT",
-        "url": "https://www.ziraatportfoy.com.tr/tr/-ziraat-portfoy-kisa-vadeli-kira-sertifikasi-katilim--tl--fonu",
+        "url": "https://piyasadetay.com/fonlar/zpk/",
     },
 ]
 
@@ -205,13 +203,13 @@ def _build_price_history(entries, days=PRICE_HISTORY_DAYS):
 
 
 # ═══════════════════════════════════════════════════════════════════════════
-# ZIRAAT PORTFÖY WEB KAZIMA (TEFAS dışı fonlar için)
+# TEFAS DIŞI FONLAR İÇİN WEB KAZIMA (PiyasaDetay)
 # ═══════════════════════════════════════════════════════════════════════════
 
-def _scrape_ziraat_price(url: str):
+def _scrape_extra_fund(url: str):
     """
-    Ziraat Portföy sitesinden 'Fon Birim Fiyatı' değerini çeker.
-    curl_cffi kullanır (bot korumasını aşmak için).
+    PiyasaDetay sitesinden fon fiyatını çeker.
+    curl_cffi kullanır (Chrome taklidi).
     Dönüş: (price, price_date) veya (None, None) hata durumunda.
     """
     try:
@@ -227,16 +225,17 @@ def _scrape_ziraat_price(url: str):
 
     html = resp.text
 
-    # Birden fazla olası kalıp dene
+    # PiyasaDetay sayfasındaki fiyat kalıpları
     patterns = [
-        # "Fon Birim Fiyatı | 7,278216" veya "Fon Birim Fiyatı: 7,278216"
-        r"Fon\s+Birim\s+Fiyat[ıi]\s*[|:]\s*([\d.,]+)",
-        # "Birim Fiyat | 7,278216"
-        r"Birim\s+Fiyat[ıi]?\s*[|:]\s*([\d.,]+)",
-        # HTML içinde gömülü "fonBirimFiyat": "7,278216"
-        r'"fon[_\s]?[Bb]irim[_\s]?[Ff]iyat[ıi]?"\s*:\s*"?([\d.,]+)"?',
-        # id="...birim...fiyat..." ... > 7,278216
-        r'id="[^"]*birim[^"]*fiyat[^"]*"[^>]*>\s*([\d.,]+)',
+        # "Birim pay fiyatı 8,707269 TL"
+        r"Birim pay fiyatı\s*([\d.,]+)\s*TL",
+        # "Birim pay fiyatı | 8,707269"
+        r"Birim pay fiyatı\s*[|:]\s*([\d.,]+)",
+        # JSON içinde "price": "8.707269"
+        r'"price"\s*:\s*"?([\d.,]+)"?',
+        r'"birimPayFiyati"\s*:\s*"?([\d.,]+)"?',
+        # genel tablo satırı
+        r"Birim pay fiyatı.*?([\d.,]+)\s*TL",
     ]
 
     for pat in patterns:
@@ -251,31 +250,25 @@ def _scrape_ziraat_price(url: str):
 
     print("    UYARI: Fiyat kalıbı bulunamadı.")
     print(f"    Sayfa boyutu: {len(html)} byte")
-
-    # HTML başında "7,278216" gibi sayı var mı diye genel bir tarama yap
-    # (son çare)
-    candidates = re.findall(r'\b(\d{1,2}[.,]\d{4,6})\b', html)
-    if candidates:
-        print(f"    Genel tarama adayları: {candidates[:10]}")
     return None, None
 
 
 def build_extra_funds(previous, history):
     """
-    TEFAS dışı fonları (Ziraat sitesi vb.) çeker ve standart formata dönüştürür.
+    TEFAS dışı fonları (PiyasaDetay vb.) çeker ve standart formata dönüştürür.
     Hata olursa önceki funds.json'daki veri korunur.
     """
     result = []
     for meta in EXTRA_FUNDS:
         kod = meta["symbol"]
-        print(f"[{kod}] Ziraat sitesinden çekiliyor...")
+        print(f"[{kod}] PiyasaDetay sitesinden çekiliyor...")
 
         prev = previous.get(kod) or {}
         prev_price = _to_float(prev.get("price"))
         prev_daily = _to_float(prev.get("dailyReturn"))
         prev_date = prev.get("priceDate")
 
-        price, price_date = _scrape_ziraat_price(meta["url"])
+        price, price_date = _scrape_extra_fund(meta["url"])
 
         if price is None:
             if prev_price is not None:
