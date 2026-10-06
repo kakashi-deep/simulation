@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-06T09:36:06.158750+00:00",
+  "updatedAt": "2026-10-06T13:30:35.736803+00:00",
   "count": 943,
   "filter": "Yok",
   "funds": [
@@ -263,10 +263,10 @@
       "name": "İSTANBUL PORTFÖY URARTU SERBEST (DÖVİZ) FON",
       "founder": "İSTANBUL PORTFÖY YÖNETİMİ A.Ş.",
       "fundType": "YAT",
-      "price": 58.74827,
+      "price": 58.748277,
       "priceDate": "2026-10-06",
       "dailyReturn": null,
-      "weeklyReturn": 0.7657271588200539,
+      "weeklyReturn": 0.7657391653028062,
       "monthlyReturn": null,
       "consecutiveUpDays": 9,
       "priceHistory": [
@@ -302,11 +302,11 @@
         },
         {
           "date": "2026-10-06",
-          "price": 58.74827,
-          "changePercent": 0.2331722571523519
+          "price": 58.748277,
+          "changePercent": 0.2331842001798856
         }
       ],
-      "portfolioSize": 1463778642.21,
+      "portfolioSize": 1463778829.61,
       "investorCount": 114
     },
     {
