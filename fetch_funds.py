@@ -6,16 +6,21 @@ haftalık/aylık getiriler buradan hesaplanır.
 funds.json'a her fon için son 7 günün fiyatları ('priceHistory') da
 eklenir; uygulama fon detay ekranında gün gün fiyatları gösterir.
 
-ÖNEMLİ: TEFAS bulk fiyat endpoint'i bazen boş döner. Bu durumda
-önceki funds.json'daki fiyat korunur; böylece uygulama veri göstermeye
-devam eder.
+ZPK ÖZEL DURUM: ZPK fonu TEFAS'ta işlem görmediği için bulk endpoint'te
+gelmiyor. Ziraat Portföy sitesinden web kazıma ile çekilir.
+
+ÖNEMLİ: TEFAS bulk fiyat endpoint'i bazen boş döner. Bu durumda:
+  1) Önceki funds.json'daki fiyat korunur (fon bazında).
+  2) Toplam fiyat oranı %50'nin altındaysa hiç yazmaz, eski dosya kalır.
 """
 
 import json
 import os
+import re
 import sys
 from datetime import datetime, timezone
 
+import requests
 from tefasmak import tum_fonlar, fonlar_son_fiyat_bulk
 
 FON_TIPLERI = ["YAT"]
@@ -26,6 +31,25 @@ HISTORY_MAX_ENTRIES = 35
 PRICE_HISTORY_DAYS = 7
 
 ISIM_FILTRE = None
+
+MIN_PRICE_RATIO = 0.5
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# TEFAS DIŞI FONLAR (manuel eklenenler)
+# ═══════════════════════════════════════════════════════════════════════════
+
+# TEFAS'ta işlem görmeyen, Ziraat Portföy sitesinden çekilen fonlar.
+# Her biri için: kod, isim, kurucu, sayfa URL'i.
+EXTRA_FUNDS = [
+    {
+        "symbol": "ZPK",
+        "name": "Ziraat Portföy Kısa Vadeli Kira Sertifikası Katılım (TL) Fonu",
+        "founder": "Ziraat Portföy Yönetimi A.Ş.",
+        "fundType": "YAT",
+        "url": "https://www.ziraatportfoy.com.tr/tr/-ziraat-portfoy-kisa-vadeli-kira-sertifikasi-katilim--tl--fonu",
+    },
+]
 
 
 # --- Yardımcılar -------------------------------------------------------------
@@ -180,6 +204,124 @@ def _build_price_history(entries, days=PRICE_HISTORY_DAYS):
     return result
 
 
+# ═══════════════════════════════════════════════════════════════════════════
+# ZIRAAT PORTFÖY WEB KAZIMA (TEFAS dışı fonlar için)
+# ═══════════════════════════════════════════════════════════════════════════
+
+def _scrape_ziraat_price(url: str):
+    """
+    Ziraat Portföy sitesinden 'Fon Birim Fiyatı' değerini çeker.
+    Dönüş: (price, price_date) veya (None, None) hata durumunda.
+    """
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/120.0.0.0 Safari/537.36"
+        ),
+        "Accept-Language": "tr-TR,tr;q=0.9,en;q=0.8",
+    }
+    try:
+        resp = requests.get(url, headers=headers, timeout=20)
+        resp.raise_for_status()
+    except Exception as e:
+        print(f"    HATA: Sayfa alınamadı: {type(e).__name__}: {e}")
+        return None, None
+
+    html = resp.text
+
+    # Birden fazla olası kalıp dene
+    patterns = [
+        # "Fon Birim Fiyatı | 7,278216" veya "Fon Birim Fiyatı: 7,278216"
+        r"Fon\s+Birim\s+Fiyat[ıi]\s*[|:]\s*([\d.,]+)",
+        # "Birim Fiyat | 7,278216"
+        r"Birim\s+Fiyat[ıi]?\s*[|:]\s*([\d.,]+)",
+        # HTML içinde gömülü "fonBirimFiyat": "7,278216" veya "fon_birim_fiyat":"7.278216"
+        r'"fon[_\s]?[Bb]irim[_\s]?[Ff]iyat[ıi]?"\s*:\s*"?([\d.,]+)"?',
+        # Genel yaklaşım: birim fiyat table'ındaki sayı
+        r'id="[^"]*birim[^"]*fiyat[^"]*"[^>]*>\s*([\d.,]+)',
+    ]
+
+    for pat in patterns:
+        m = re.search(pat, html, re.IGNORECASE | re.DOTALL)
+        if m:
+            raw = m.group(1).strip()
+            price = _to_float(raw)
+            if price is not None and price > 0:
+                print(f"    Regex eşleşti: '{pat[:40]}...' → {raw} → {price}")
+                # Bugünün tarihi (TEFAS formatı)
+                today = datetime.now(timezone.utc).date().isoformat()
+                return price, today
+
+    print("    UYARI: Fiyat kalıbı bulunamadı.")
+    # Hata ayıklama için sayfa boyutunu logla
+    print(f"    Sayfa boyutu: {len(html)} byte")
+    return None, None
+
+
+def build_extra_funds(previous, history):
+    """
+    TEFAS dışı fonları (Ziraat sitesi vb.) çeker ve standart formata dönüştürür.
+    Hata olursa önceki funds.json'daki veri korunur.
+    """
+    result = []
+    for meta in EXTRA_FUNDS:
+        kod = meta["symbol"]
+        print(f"[{kod}] Ziraat sitesinden çekiliyor...")
+
+        prev = previous.get(kod) or {}
+        prev_price = _to_float(prev.get("price"))
+        prev_daily = _to_float(prev.get("dailyReturn"))
+        prev_date = prev.get("priceDate")
+
+        price, price_date = _scrape_ziraat_price(meta["url"])
+
+        if price is None:
+            # Scraping başarısız → önceki veriyi koru
+            if prev_price is not None:
+                price = prev_price
+                price_date = prev_date
+                print(f"    → Önceki fiyat korundu: {price}")
+            else:
+                print(f"    → Önceki veri de yok, atlanıyor.")
+                continue
+
+        # History'e ekle
+        _update_history_entry(history, kod, price, price_date)
+
+        # Günlük getiri (önceki ile karşılaştır)
+        daily_return = None
+        if price_date and prev_date and prev_price and prev_price > 0:
+            if price_date > prev_date:
+                daily_return = (price - prev_price) / prev_price * 100.0
+            elif price_date == prev_date:
+                daily_return = prev_daily
+        elif prev_daily is not None:
+            daily_return = prev_daily
+
+        entries = history.get(kod, [])
+        returns = _compute_returns(entries)
+        price_history = _build_price_history(entries)
+
+        result.append({
+            "symbol": kod,
+            "name": meta["name"],
+            "founder": meta["founder"],
+            "fundType": meta["fundType"],
+            "price": price,
+            "priceDate": price_date,
+            "dailyReturn": daily_return,
+            "weeklyReturn": returns["weeklyReturn"],
+            "monthlyReturn": returns["monthlyReturn"],
+            "consecutiveUpDays": returns["consecutiveUpDays"],
+            "priceHistory": price_history,
+            "portfolioSize": prev.get("portfolioSize"),
+            "investorCount": prev.get("investorCount"),
+        })
+
+    return result
+
+
 # --- Backfill keşif ---------------------------------------------------------
 
 def _discover_history_function():
@@ -224,10 +366,6 @@ def _report_backfill_options():
 
 
 def _try_backfill_test():
-    """
-    Geçmiş fiyat fonksiyonu bulursa farklı parametreleri dener,
-    hangi çağrının veri döndürdüğünü loglar.
-    """
     fn, name = _discover_history_function()
     if fn is None:
         _report_backfill_options()
@@ -236,7 +374,6 @@ def _try_backfill_test():
     print(f"Backfill: '{name}' fonksiyonu bulundu, farklı parametreler deneniyor...")
     test_kod = "AAL"
 
-    # 1) Sadece kod
     try:
         r1 = fn(test_kod)
         print(f"Backfill [{name}('{test_kod}')]: tip={type(r1).__name__}, "
@@ -245,7 +382,6 @@ def _try_backfill_test():
     except Exception as e:
         print(f"Backfill ['{test_kod}']: HATA {type(e).__name__}: {e}")
 
-    # 2) Kod + gün sayısı (int)
     try:
         r2 = fn(test_kod, 30)
         print(f"Backfill [{name}('{test_kod}', 30)]: tip={type(r2).__name__}, "
@@ -281,7 +417,6 @@ def build_fund_list(previous, prev_updated_at, history):
                 if isinstance(row, dict)
             }
 
-        # ── Bulk endpoint sağlık kontrolü ──
         bulk_bos = not fiyatlar
         if bulk_bos:
             print(f"[{fon_tipi}] ⚠️ UYARI: bulk fiyat endpoint'i BOŞ döndü! "
@@ -336,9 +471,6 @@ def build_fund_list(previous, prev_updated_at, history):
             price = _extract_price(fiyat_bilgi)
             price_date = fiyat_bilgi.get("tarih")
 
-            # ═══════════════════════════════════════════════════════
-            # YENİ FİYAT GELMEZSE ESKİ FİYATI KORU
-            # ═══════════════════════════════════════════════════════
             if price is None:
                 fiyat_gelmeyen += 1
                 if prev_price is not None:
@@ -346,11 +478,9 @@ def build_fund_list(previous, prev_updated_at, history):
                     price_date = prev.get("priceDate")
                     eski_fiyat_korunan += 1
 
-            # ── Geçmişi güncelle (sadece yeni fiyat varsa) ──
             if not bulk_bos and price is not None:
                 _update_history_entry(history, kod, price, price_date)
 
-            # ── Günlük getiri ──
             daily_return = None
             if price is not None and price_date and prev_date:
                 if price_date > prev_date and prev_price and prev_price > 0:
@@ -360,12 +490,9 @@ def build_fund_list(previous, prev_updated_at, history):
             elif price is not None:
                 daily_return = prev_daily
 
-            # ── Haftalık/aylık getiri + üst üste artış ──
             entries = history.get(kod, [])
             returns = _compute_returns(entries)
 
-            # ── Fiyat geçmişi ──
-            # Yeni entry eklenmediyse eski priceHistory'yi koru
             if not bulk_bos and price is not None:
                 price_history = _build_price_history(entries)
             else:
@@ -399,6 +526,18 @@ def build_fund_list(previous, prev_updated_at, history):
         print(f"⚠️ {fiyat_gelmeyen} fon için fiyat gelmedi; "
               f"{eski_fiyat_korunan} tanesi eski funds.json'dan korundu.")
 
+    # ═══════════════════════════════════════════════════════════════════
+    # TEFAS DIŞI FONLARI EKLE (ZPK vb.)
+    # ═══════════════════════════════════════════════════════════════════
+    print()
+    print("═══ TEFAS dışı fonlar çekiliyor ═══")
+    extra = build_extra_funds(previous, history)
+    for f in extra:
+        # Aynı sembol varsa üzerine yaz
+        all_funds = [x for x in all_funds if x["symbol"] != f["symbol"]]
+        all_funds.append(f)
+        print(f"[{f['symbol']}] Eklendi: {f['price']} TL")
+
     return all_funds
 
 
@@ -413,8 +552,9 @@ def _sanity_check(funds):
           f"haftalık: {with_weekly}, aylık: {with_monthly}, "
           f"geçmiş: {with_history}, 5+ gün üst üste artan: {with_streak}")
 
-    if with_price == 0:
-        print("🚨 KRİTİK: Hiçbir fon için fiyat yok! Uygulama boş liste gösterecek.")
+    if len(funds) == 0:
+        return 0.0
+    return with_price / len(funds)
 
 
 def main():
@@ -451,7 +591,14 @@ def main():
               file=sys.stderr)
         sys.exit(1)
 
-    _sanity_check(funds)
+    price_ratio = _sanity_check(funds)
+
+    if price_ratio < MIN_PRICE_RATIO:
+        print(f"🚨 GÜVENLİK: Fiyat oranı %{price_ratio*100:.1f} "
+              f"(minimum %{MIN_PRICE_RATIO*100:.0f}). "
+              f"funds.json GÜNCELLENMEDİ, eski sağlam veri korundu.")
+        print("🚨 history.json da güncellenmedi.")
+        sys.exit(0)
 
     now = datetime.now(timezone.utc).isoformat()
     output = {
