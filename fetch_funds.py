@@ -8,6 +8,7 @@ eklenir; uygulama fon detay ekranında gün gün fiyatları gösterir.
 
 ZPK ÖZEL DURUM: ZPK fonu TEFAS'ta işlem görmediği için bulk endpoint'te
 gelmiyor. Ziraat Portföy sitesinden web kazıma ile çekilir.
+Site bot koruması kullandığı için curl_cffi (Chrome taklidi) kullanılır.
 
 ÖNEMLİ: TEFAS bulk fiyat endpoint'i bazen boş döner. Bu durumda:
   1) Önceki funds.json'daki fiyat korunur (fon bazında).
@@ -20,7 +21,7 @@ import re
 import sys
 from datetime import datetime, timezone
 
-import requests
+from curl_cffi import requests as curl_requests
 from tefasmak import tum_fonlar, fonlar_son_fiyat_bulk
 
 FON_TIPLERI = ["YAT"]
@@ -40,7 +41,6 @@ MIN_PRICE_RATIO = 0.5
 # ═══════════════════════════════════════════════════════════════════════════
 
 # TEFAS'ta işlem görmeyen, Ziraat Portföy sitesinden çekilen fonlar.
-# Her biri için: kod, isim, kurucu, sayfa URL'i.
 EXTRA_FUNDS = [
     {
         "symbol": "ZPK",
@@ -211,18 +211,15 @@ def _build_price_history(entries, days=PRICE_HISTORY_DAYS):
 def _scrape_ziraat_price(url: str):
     """
     Ziraat Portföy sitesinden 'Fon Birim Fiyatı' değerini çeker.
+    curl_cffi kullanır (bot korumasını aşmak için).
     Dönüş: (price, price_date) veya (None, None) hata durumunda.
     """
-    headers = {
-        "User-Agent": (
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/120.0.0.0 Safari/537.36"
-        ),
-        "Accept-Language": "tr-TR,tr;q=0.9,en;q=0.8",
-    }
     try:
-        resp = requests.get(url, headers=headers, timeout=20)
+        resp = curl_requests.get(
+            url,
+            impersonate="chrome120",
+            timeout=20,
+        )
         resp.raise_for_status()
     except Exception as e:
         print(f"    HATA: Sayfa alınamadı: {type(e).__name__}: {e}")
@@ -236,9 +233,9 @@ def _scrape_ziraat_price(url: str):
         r"Fon\s+Birim\s+Fiyat[ıi]\s*[|:]\s*([\d.,]+)",
         # "Birim Fiyat | 7,278216"
         r"Birim\s+Fiyat[ıi]?\s*[|:]\s*([\d.,]+)",
-        # HTML içinde gömülü "fonBirimFiyat": "7,278216" veya "fon_birim_fiyat":"7.278216"
+        # HTML içinde gömülü "fonBirimFiyat": "7,278216"
         r'"fon[_\s]?[Bb]irim[_\s]?[Ff]iyat[ıi]?"\s*:\s*"?([\d.,]+)"?',
-        # Genel yaklaşım: birim fiyat table'ındaki sayı
+        # id="...birim...fiyat..." ... > 7,278216
         r'id="[^"]*birim[^"]*fiyat[^"]*"[^>]*>\s*([\d.,]+)',
     ]
 
@@ -249,13 +246,17 @@ def _scrape_ziraat_price(url: str):
             price = _to_float(raw)
             if price is not None and price > 0:
                 print(f"    Regex eşleşti: '{pat[:40]}...' → {raw} → {price}")
-                # Bugünün tarihi (TEFAS formatı)
                 today = datetime.now(timezone.utc).date().isoformat()
                 return price, today
 
     print("    UYARI: Fiyat kalıbı bulunamadı.")
-    # Hata ayıklama için sayfa boyutunu logla
     print(f"    Sayfa boyutu: {len(html)} byte")
+
+    # HTML başında "7,278216" gibi sayı var mı diye genel bir tarama yap
+    # (son çare)
+    candidates = re.findall(r'\b(\d{1,2}[.,]\d{4,6})\b', html)
+    if candidates:
+        print(f"    Genel tarama adayları: {candidates[:10]}")
     return None, None
 
 
@@ -277,7 +278,6 @@ def build_extra_funds(previous, history):
         price, price_date = _scrape_ziraat_price(meta["url"])
 
         if price is None:
-            # Scraping başarısız → önceki veriyi koru
             if prev_price is not None:
                 price = prev_price
                 price_date = prev_date
@@ -286,10 +286,8 @@ def build_extra_funds(previous, history):
                 print(f"    → Önceki veri de yok, atlanıyor.")
                 continue
 
-        # History'e ekle
         _update_history_entry(history, kod, price, price_date)
 
-        # Günlük getiri (önceki ile karşılaştır)
         daily_return = None
         if price_date and prev_date and prev_price and prev_price > 0:
             if price_date > prev_date:
@@ -526,14 +524,10 @@ def build_fund_list(previous, prev_updated_at, history):
         print(f"⚠️ {fiyat_gelmeyen} fon için fiyat gelmedi; "
               f"{eski_fiyat_korunan} tanesi eski funds.json'dan korundu.")
 
-    # ═══════════════════════════════════════════════════════════════════
-    # TEFAS DIŞI FONLARI EKLE (ZPK vb.)
-    # ═══════════════════════════════════════════════════════════════════
     print()
     print("═══ TEFAS dışı fonlar çekiliyor ═══")
     extra = build_extra_funds(previous, history)
     for f in extra:
-        # Aynı sembol varsa üzerine yaz
         all_funds = [x for x in all_funds if x["symbol"] != f["symbol"]]
         all_funds.append(f)
         print(f"[{f['symbol']}] Eklendi: {f['price']} TL")
