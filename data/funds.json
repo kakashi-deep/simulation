@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-06T09:34:11.676067+00:00",
+  "updatedAt": "2026-10-06T09:36:06.158750+00:00",
   "count": 943,
   "filter": "Yok",
   "funds": [
@@ -48015,7 +48015,7 @@
       "name": "Ziraat Portföy Kısa Vadeli Kira Sertifikası Katılım (TL) Fonu",
       "founder": "Ziraat Portföy Yönetimi A.Ş.",
       "fundType": "YAT",
-      "price": 5.986483,
+      "price": 8.799612,
       "priceDate": "2026-10-06",
       "dailyReturn": null,
       "weeklyReturn": null,
@@ -48024,7 +48024,7 @@
       "priceHistory": [
         {
           "date": "2026-10-06",
-          "price": 5.986483,
+          "price": 8.799612,
           "changePercent": null
         }
       ],
