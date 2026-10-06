@@ -7,7 +7,8 @@ funds.json'a her fon için son 7 günün fiyatları ('priceHistory') da
 eklenir; uygulama fon detay ekranında gün gün fiyatları gösterir.
 
 ZPK ÖZEL DURUM: ZPK fonu TEFAS'ta işlem görmediği için bulk endpoint'te
-gelmiyor. PiyasaDetay.com'dan web kazıma ile çekilir.
+gelmiyor. PiyasaDetay.com'dan web kazıma ile çekilir. Sayfadaki
+grafik verisinden SON (en güncel) fiyat alınır.
 
 ÖNEMLİ: TEFAS bulk fiyat endpoint'i bazen boş döner. Bu durumda:
   1) Önceki funds.json'daki fiyat korunur (fon bazında).
@@ -206,16 +207,38 @@ def _build_price_history(entries, days=PRICE_HISTORY_DAYS):
 # TEFAS DIŞI FONLAR İÇİN WEB KAZIMA (PiyasaDetay)
 # ═══════════════════════════════════════════════════════════════════════════
 
-# Fon fiyatları 6 ondalıklıdır (8.707269 gibi). Bu yüzden regex'lerde
-# en az 4 ondalık zorunludur; 5 gibi kısa sayılar elenir.
-_NUM_PATTERN = r"(\d{1,4}[.,]\d{4,6})"
+def _extract_chart_data(html: str):
+    """
+    PiyasaDetay sayfasındaki grafik JSON dizisini bulur ve
+    içindeki (date, price) kayıtlarını döner. En son kayıt güncel fiyattır.
+
+    Beklenen format:
+      funds-chart-data">[{"date":"2025-09-11","price":5.986483},...]
+    """
+    # Önce grafik dizisinin tamamını yakala
+    pattern = r'funds-chart-data"?\s*>\s*(\[[^\]]+\])'
+    m = re.search(pattern, html, re.DOTALL)
+    if not m:
+        # Alternatif: id attribute içinde arayalım
+        pattern2 = r'id="[^"]*chart[^"]*"[^>]*>\s*(\[[^\]]+\])'
+        m = re.search(pattern2, html, re.DOTALL)
+
+    if not m:
+        return None
+
+    try:
+        data = json.loads(m.group(1))
+        if isinstance(data, list) and data:
+            return data
+    except json.JSONDecodeError as e:
+        print(f"    JSON parse hatası: {e}")
+    return None
 
 
 def _scrape_extra_fund(url: str):
     """
-    PiyasaDetay sitesinden fon fiyatını çeker.
-    Fon fiyatları 6 ondalıklı olduğu için regex 4+ ondalık zorunlu kılar;
-    böylece "5 TL" gibi yanlış değerler yakalanmaz.
+    PiyasaDetay sitesinden fonun EN GÜNCEL fiyatını çeker.
+    Sayfadaki grafik verisi kullanılır; listenin son elemanı güncel fiyattır.
     """
     try:
         resp = curl_requests.get(
@@ -230,49 +253,41 @@ def _scrape_extra_fund(url: str):
 
     html = resp.text
 
-    # En spesifikten en genele doğru sıralı. Hepsi 4+ ondalık zorunlu.
-    patterns = [
-        # "Birim pay fiyatı 8,707269 TL"
-        rf"Birim\s+pay\s+fiyat[ıi]\s*([\d]{{1,4}}[.,][\d]{{4,6}})\s*TL",
-        # "Birim pay fiyatı: 8,707269" veya "| 8,707269"
-        rf"Birim\s+pay\s+fiyat[ıi]\s*[|:]\s*([\d]{{1,4}}[.,][\d]{{4,6}})",
-        # JSON içinde "birimPayFiyati": "8.707269"
-        rf'"birimPayFiyati"\s*:\s*"?([\d]{{1,4}}[.,][\d]{{4,6}})"?',
-        # JSON içinde "price": "8.707269"
-        rf'"price"\s*:\s*"?([\d]{{1,4}}[.,][\d]{{4,6}})"?',
-        # id="...birim...fiyat..." > 8,707269
-        rf'id="[^"]*birim[^"]*fiyat[^"]*"[^>]*>\s*([\d]{{1,4}}[.,][\d]{{4,6}})',
-        # Genel: "Birim pay fiyatı" sonrası 100 karakter içinde 4+ ondalıklı sayı
-        rf"Birim\s+pay\s+fiyat[ıi].{{0,100}}?([\d]{{1,4}}[.,][\d]{{4,6}})",
-    ]
+    # ─── 1. Yol: Grafik verisini bul, son elemanı al ──────────────────
+    chart = _extract_chart_data(html)
+    if chart:
+        print(f"    Grafik verisi bulundu: {len(chart)} kayıt")
+        last = chart[-1]
+        price = _to_float(last.get("price"))
+        date = last.get("date")
+        if price and price > 0 and date:
+            # Bazen tarih formatı "2026-10-06" şeklinde gelir — ISO uyumlu
+            print(f"    Son kayıt: {date} → {price}")
+            return price, date
+        else:
+            print(f"    Grafik son kaydı eksik: {last}")
 
+    # ─── 2. Yol: "Birim pay fiyatı X TL" metnini dene ─────────────────
+    patterns = [
+        r"Birim\s+pay\s+fiyat[ıi]\s*([\d]{1,4}[.,][\d]{4,6})\s*TL",
+        r"Birim\s+pay\s+fiyat[ıi]\s*[|:]\s*([\d]{1,4}[.,][\d]{4,6})",
+    ]
     for pat in patterns:
-        m = re.search(pat, html, re.IGNORECASE | re.DOTALL)
+        m = re.search(pat, html, re.IGNORECASE)
         if m:
             raw = m.group(1).strip()
             price = _to_float(raw)
-            if price is not None and price > 0:
-                # Eşleşme etrafındaki metni de logla (debug için)
-                start = max(0, m.start() - 40)
-                end = min(len(html), m.end() + 40)
-                context = html[start:end].replace("\n", " ").strip()
-                print(f"    Regex eşleşti: '{pat[:50]}...'")
-                print(f"    Yakalanan: {raw} → {price}")
-                print(f"    Bağlam: ...{context}...")
-
+            if price and price > 0:
+                print(f"    Metin eşleşti: {raw} → {price}")
                 today = datetime.now(timezone.utc).date().isoformat()
                 return price, today
 
-    print("    UYARI: Fiyat kalıbı bulunamadı.")
+    print("    UYARI: Fiyat bulunamadı.")
     print(f"    Sayfa boyutu: {len(html)} byte")
 
-    # Debug: sayfadaki tüm 4+ ondalıklı sayıları listele
-    adaylar = re.findall(r"\d{1,4}[.,]\d{4,6}", html)
-    if adaylar:
-        # En sık geçen 10 tanesini göster
-        from collections import Counter
-        en_sik = Counter(adaylar).most_common(10)
-        print(f"    Sayfadaki 4+ ondalıklı sayılar (top 10): {en_sik}")
+    # Debug: sayfadaki JSON benzeri kalıpları kontrol et
+    if "funds-chart-data" in html:
+        print("    'funds-chart-data' metni sayfada var ama parse edilemedi.")
     return None, None
 
 
