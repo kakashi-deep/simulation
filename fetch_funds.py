@@ -206,11 +206,16 @@ def _build_price_history(entries, days=PRICE_HISTORY_DAYS):
 # TEFAS DIŞI FONLAR İÇİN WEB KAZIMA (PiyasaDetay)
 # ═══════════════════════════════════════════════════════════════════════════
 
+# Fon fiyatları 6 ondalıklıdır (8.707269 gibi). Bu yüzden regex'lerde
+# en az 4 ondalık zorunludur; 5 gibi kısa sayılar elenir.
+_NUM_PATTERN = r"(\d{1,4}[.,]\d{4,6})"
+
+
 def _scrape_extra_fund(url: str):
     """
     PiyasaDetay sitesinden fon fiyatını çeker.
-    curl_cffi kullanır (Chrome taklidi).
-    Dönüş: (price, price_date) veya (None, None) hata durumunda.
+    Fon fiyatları 6 ondalıklı olduğu için regex 4+ ondalık zorunlu kılar;
+    böylece "5 TL" gibi yanlış değerler yakalanmaz.
     """
     try:
         resp = curl_requests.get(
@@ -225,17 +230,20 @@ def _scrape_extra_fund(url: str):
 
     html = resp.text
 
-    # PiyasaDetay sayfasındaki fiyat kalıpları
+    # En spesifikten en genele doğru sıralı. Hepsi 4+ ondalık zorunlu.
     patterns = [
         # "Birim pay fiyatı 8,707269 TL"
-        r"Birim pay fiyatı\s*([\d.,]+)\s*TL",
-        # "Birim pay fiyatı | 8,707269"
-        r"Birim pay fiyatı\s*[|:]\s*([\d.,]+)",
+        rf"Birim\s+pay\s+fiyat[ıi]\s*([\d]{{1,4}}[.,][\d]{{4,6}})\s*TL",
+        # "Birim pay fiyatı: 8,707269" veya "| 8,707269"
+        rf"Birim\s+pay\s+fiyat[ıi]\s*[|:]\s*([\d]{{1,4}}[.,][\d]{{4,6}})",
+        # JSON içinde "birimPayFiyati": "8.707269"
+        rf'"birimPayFiyati"\s*:\s*"?([\d]{{1,4}}[.,][\d]{{4,6}})"?',
         # JSON içinde "price": "8.707269"
-        r'"price"\s*:\s*"?([\d.,]+)"?',
-        r'"birimPayFiyati"\s*:\s*"?([\d.,]+)"?',
-        # genel tablo satırı
-        r"Birim pay fiyatı.*?([\d.,]+)\s*TL",
+        rf'"price"\s*:\s*"?([\d]{{1,4}}[.,][\d]{{4,6}})"?',
+        # id="...birim...fiyat..." > 8,707269
+        rf'id="[^"]*birim[^"]*fiyat[^"]*"[^>]*>\s*([\d]{{1,4}}[.,][\d]{{4,6}})',
+        # Genel: "Birim pay fiyatı" sonrası 100 karakter içinde 4+ ondalıklı sayı
+        rf"Birim\s+pay\s+fiyat[ıi].{{0,100}}?([\d]{{1,4}}[.,][\d]{{4,6}})",
     ]
 
     for pat in patterns:
@@ -244,20 +252,31 @@ def _scrape_extra_fund(url: str):
             raw = m.group(1).strip()
             price = _to_float(raw)
             if price is not None and price > 0:
-                print(f"    Regex eşleşti: '{pat[:40]}...' → {raw} → {price}")
+                # Eşleşme etrafındaki metni de logla (debug için)
+                start = max(0, m.start() - 40)
+                end = min(len(html), m.end() + 40)
+                context = html[start:end].replace("\n", " ").strip()
+                print(f"    Regex eşleşti: '{pat[:50]}...'")
+                print(f"    Yakalanan: {raw} → {price}")
+                print(f"    Bağlam: ...{context}...")
+
                 today = datetime.now(timezone.utc).date().isoformat()
                 return price, today
 
     print("    UYARI: Fiyat kalıbı bulunamadı.")
     print(f"    Sayfa boyutu: {len(html)} byte")
+
+    # Debug: sayfadaki tüm 4+ ondalıklı sayıları listele
+    adaylar = re.findall(r"\d{1,4}[.,]\d{4,6}", html)
+    if adaylar:
+        # En sık geçen 10 tanesini göster
+        from collections import Counter
+        en_sik = Counter(adaylar).most_common(10)
+        print(f"    Sayfadaki 4+ ondalıklı sayılar (top 10): {en_sik}")
     return None, None
 
 
 def build_extra_funds(previous, history):
-    """
-    TEFAS dışı fonları (PiyasaDetay vb.) çeker ve standart formata dönüştürür.
-    Hata olursa önceki funds.json'daki veri korunur.
-    """
     result = []
     for meta in EXTRA_FUNDS:
         kod = meta["symbol"]
