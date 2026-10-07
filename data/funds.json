@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-07T10:56:56.846249+00:00",
+  "updatedAt": "2026-10-07T13:43:03.402482+00:00",
   "count": 943,
   "filter": "Yok",
   "funds": [
@@ -21464,12 +21464,12 @@
       "name": "İSTANBUL PORTFÖY BİRİNCİ FON SEPETİ SERBEST FON",
       "founder": "İSTANBUL PORTFÖY YÖNETİMİ A.Ş.",
       "fundType": "YAT",
-      "price": 9.758361,
+      "price": 9.757394,
       "priceDate": "2026-10-07",
       "dailyReturn": 0.006784386359941646,
-      "weeklyReturn": -0.9510398741054794,
+      "weeklyReturn": -0.960855082257939,
       "monthlyReturn": null,
-      "consecutiveUpDays": 4,
+      "consecutiveUpDays": 0,
       "priceHistory": [
         {
           "date": "2026-09-29",
@@ -21503,11 +21503,11 @@
         },
         {
           "date": "2026-10-07",
-          "price": 9.758361,
-          "changePercent": 0.006784386359941646
+          "price": 9.757394,
+          "changePercent": -0.0031257369181083355
         }
       ],
-      "portfolioSize": 131689377.65,
+      "portfolioSize": 131676323.91,
       "investorCount": 36
     },
     {
@@ -27737,12 +27737,12 @@
       "name": "NEO PORTFÖY BİRİNCİ FON SEPETİ FONU",
       "founder": "NEO PORTFÖY YÖNETİMİ A.Ş.",
       "fundType": "YAT",
-      "price": 0.0,
+      "price": 5.71346,
       "priceDate": "2026-10-07",
       "dailyReturn": -100.0,
-      "weeklyReturn": -100.0,
+      "weeklyReturn": 0.1987328239562553,
       "monthlyReturn": null,
-      "consecutiveUpDays": 0,
+      "consecutiveUpDays": 4,
       "priceHistory": [
         {
           "date": "2026-09-29",
@@ -27776,11 +27776,11 @@
         },
         {
           "date": "2026-10-07",
-          "price": 0.0,
-          "changePercent": -100.0
+          "price": 5.71346,
+          "changePercent": 0.18826090829576397
         }
       ],
-      "portfolioSize": 0.0,
+      "portfolioSize": 8297463.25,
       "investorCount": 115
     },
     {
@@ -41099,10 +41099,10 @@
       "name": "TEB PORTFÖY ALTIN FONU",
       "founder": "TEB PORTFÖY YÖNETİMİ A.Ş.",
       "fundType": "YAT",
-      "price": 0.0,
+      "price": 1.417908,
       "priceDate": "2026-10-07",
       "dailyReturn": -100.0,
-      "weeklyReturn": -100.0,
+      "weeklyReturn": -2.3672990481226917,
       "monthlyReturn": null,
       "consecutiveUpDays": 0,
       "priceHistory": [
@@ -41138,11 +41138,11 @@
         },
         {
           "date": "2026-10-07",
-          "price": 0.0,
-          "changePercent": -100.0
+          "price": 1.417908,
+          "changePercent": -0.22068282192529068
         }
       ],
-      "portfolioSize": 0.0,
+      "portfolioSize": 14118991311.01,
       "investorCount": 29620
     },
     {
