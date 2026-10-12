@@ -1,14 +1,14 @@
 """
 TEFAS'tan TÜM yatırım fonlarını (YAT) çeker, data/funds.json olarak yazar.
-Ayrıca son 35 günün fiyat geçmişini data/history.json'da biriktirir;
+Ayrıca son 90 günün fiyat geçmişini data/history.json'da biriktirir;
 haftalık/aylık getiriler buradan hesaplanır.
 
-funds.json'a her fon için son 7 günün fiyatları ('priceHistory') da
-eklenir; uygulama fon detay ekranında gün gün fiyatları gösterir.
+funds.json'a her fon için son 90 günün fiyatları ('priceHistory') da
+eklenir; uygulama pozisyon detay ekranında gün gün fiyatları gösterir.
 
 ZPK ÖZEL DURUM: ZPK fonu TEFAS'ta işlem görmediği için bulk endpoint'te
-gelmiyor. PiyasaDetay.com'dan web kazıma ile çekilir. Sayfadaki
-grafik verisinden SON (en güncel) fiyat alınır.
+gelmiyor. PiyasaDetay.com'dan web kazıma ile çekilir. Sayfadaki grafik
+verisinden SON (en güncel) fiyat alınır.
 
 ÖNEMLİ: TEFAS bulk fiyat endpoint'i bazen boş döner. Bu durumda:
   1) Önceki funds.json'daki fiyat korunur (fon bazında).
@@ -27,9 +27,9 @@ from tefasmak import tum_fonlar, fonlar_son_fiyat_bulk
 FON_TIPLERI = ["YAT"]
 OUTPUT_PATH = "data/funds.json"
 HISTORY_PATH = "data/history.json"
-HISTORY_MAX_ENTRIES = 35
+HISTORY_MAX_ENTRIES = 90
 
-PRICE_HISTORY_DAYS = 7
+PRICE_HISTORY_DAYS = 90
 
 ISIM_FILTRE = None
 
@@ -211,15 +211,10 @@ def _extract_chart_data(html: str):
     """
     PiyasaDetay sayfasındaki grafik JSON dizisini bulur ve
     içindeki (date, price) kayıtlarını döner. En son kayıt güncel fiyattır.
-
-    Beklenen format:
-      funds-chart-data">[{"date":"2025-09-11","price":5.986483},...]
     """
-    # Önce grafik dizisinin tamamını yakala
     pattern = r'funds-chart-data"?\s*>\s*(\[[^\]]+\])'
     m = re.search(pattern, html, re.DOTALL)
     if not m:
-        # Alternatif: id attribute içinde arayalım
         pattern2 = r'id="[^"]*chart[^"]*"[^>]*>\s*(\[[^\]]+\])'
         m = re.search(pattern2, html, re.DOTALL)
 
@@ -253,7 +248,6 @@ def _scrape_extra_fund(url: str):
 
     html = resp.text
 
-    # ─── 1. Yol: Grafik verisini bul, son elemanı al ──────────────────
     chart = _extract_chart_data(html)
     if chart:
         print(f"    Grafik verisi bulundu: {len(chart)} kayıt")
@@ -261,13 +255,11 @@ def _scrape_extra_fund(url: str):
         price = _to_float(last.get("price"))
         date = last.get("date")
         if price and price > 0 and date:
-            # Bazen tarih formatı "2026-10-06" şeklinde gelir — ISO uyumlu
             print(f"    Son kayıt: {date} → {price}")
             return price, date
         else:
             print(f"    Grafik son kaydı eksik: {last}")
 
-    # ─── 2. Yol: "Birim pay fiyatı X TL" metnini dene ─────────────────
     patterns = [
         r"Birim\s+pay\s+fiyat[ıi]\s*([\d]{1,4}[.,][\d]{4,6})\s*TL",
         r"Birim\s+pay\s+fiyat[ıi]\s*[|:]\s*([\d]{1,4}[.,][\d]{4,6})",
@@ -285,7 +277,6 @@ def _scrape_extra_fund(url: str):
     print("    UYARI: Fiyat bulunamadı.")
     print(f"    Sayfa boyutu: {len(html)} byte")
 
-    # Debug: sayfadaki JSON benzeri kalıpları kontrol et
     if "funds-chart-data" in html:
         print("    'funds-chart-data' metni sayfada var ama parse edilemedi.")
     return None, None
