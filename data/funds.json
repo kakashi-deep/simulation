@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-14T12:13:57.820587+00:00",
+  "updatedAt": "2026-10-14T21:50:26.923681+00:00",
   "count": 943,
   "filter": "Yok",
   "funds": [
@@ -72599,10 +72599,10 @@
       "name": "SPARTA PORTFÖY ÜÇÜNCÜ HİSSE SENEDİ SERBEST (TL) FON (HİSSE SENEDİ YOĞUN FON)",
       "founder": "SPARTA PORTFÖY YÖNETİMİ A.Ş.",
       "fundType": "YAT",
-      "price": 0.001589,
+      "price": 0.826537,
       "priceDate": "2026-10-14",
       "dailyReturn": -99.84209872556082,
-      "weeklyReturn": -99.84499920012173,
+      "weeklyReturn": -19.374514708005417,
       "monthlyReturn": null,
       "consecutiveUpDays": 0,
       "priceHistory": [
@@ -72683,11 +72683,11 @@
         },
         {
           "date": "2026-10-14",
-          "price": 0.001589,
-          "changePercent": -99.84209872556082
+          "price": 0.826537,
+          "changePercent": -17.865798822448014
         }
       ],
-      "portfolioSize": 4.18,
+      "portfolioSize": 2174.62,
       "investorCount": 2
     },
     {
