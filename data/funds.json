@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-10-21T12:10:50.976186+00:00",
-  "count": 943,
+  "updatedAt": "2026-10-21T21:52:18.409510+00:00",
+  "count": 942,
   "filter": "Yok",
   "funds": [
     {
@@ -32507,127 +32507,6 @@
       ],
       "portfolioSize": 17802336.45,
       "investorCount": 482
-    },
-    {
-      "symbol": "GO3",
-      "name": "ONE PORTFÖY ÜÇÜNCÜ FON SEPETİ FONU",
-      "founder": "ONE PORTFÖY YÖNETİMİ A.Ş.",
-      "fundType": "YAT",
-      "price": 4.441048,
-      "priceDate": "2026-10-21",
-      "dailyReturn": 0.4954341939656442,
-      "weeklyReturn": -1.1220444917046746,
-      "monthlyReturn": null,
-      "consecutiveUpDays": 1,
-      "priceHistory": [
-        {
-          "date": "2026-09-23",
-          "price": 4.825615,
-          "changePercent": null
-        },
-        {
-          "date": "2026-09-24",
-          "price": 4.784553,
-          "changePercent": -0.8509174478278967
-        },
-        {
-          "date": "2026-09-25",
-          "price": 4.656463,
-          "changePercent": -2.6771570928360555
-        },
-        {
-          "date": "2026-09-28",
-          "price": 4.675073,
-          "changePercent": 0.39965956993539264
-        },
-        {
-          "date": "2026-09-29",
-          "price": 4.570595,
-          "changePercent": -2.234788633247016
-        },
-        {
-          "date": "2026-09-30",
-          "price": 4.526684,
-          "changePercent": -0.9607283078023668
-        },
-        {
-          "date": "2026-10-01",
-          "price": 4.487273,
-          "changePercent": -0.8706373142017492
-        },
-        {
-          "date": "2026-10-02",
-          "price": 4.503745,
-          "changePercent": 0.3670826357121633
-        },
-        {
-          "date": "2026-10-05",
-          "price": 4.532374,
-          "changePercent": 0.6356709804840098
-        },
-        {
-          "date": "2026-10-06",
-          "price": 4.548115,
-          "changePercent": 0.34730143628924326
-        },
-        {
-          "date": "2026-10-07",
-          "price": 4.542079,
-          "changePercent": -0.1327143223071521
-        },
-        {
-          "date": "2026-10-08",
-          "price": 4.485271,
-          "changePercent": -1.25070479839739
-        },
-        {
-          "date": "2026-10-09",
-          "price": 4.477097,
-          "changePercent": -0.1822409392877342
-        },
-        {
-          "date": "2026-10-12",
-          "price": 4.491444,
-          "changePercent": 0.32045318651797755
-        },
-        {
-          "date": "2026-10-13",
-          "price": 4.491692,
-          "changePercent": 0.005521609531347552
-        },
-        {
-          "date": "2026-10-14",
-          "price": 4.503782,
-          "changePercent": 0.26916360249101234
-        },
-        {
-          "date": "2026-10-15",
-          "price": 4.471048,
-          "changePercent": -0.7268113776377383
-        },
-        {
-          "date": "2026-10-16",
-          "price": 4.468567,
-          "changePercent": -0.05549034588757517
-        },
-        {
-          "date": "2026-10-19",
-          "price": 4.443851,
-          "changePercent": -0.5531079650366602
-        },
-        {
-          "date": "2026-10-20",
-          "price": 4.419154,
-          "changePercent": -0.5557567074143718
-        },
-        {
-          "date": "2026-10-21",
-          "price": 4.441048,
-          "changePercent": 0.4954341939656442
-        }
-      ],
-      "portfolioSize": 11536313.78,
-      "investorCount": 352
     },
     {
       "symbol": "GO4",
