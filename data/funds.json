@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-11-06T14:29:51.195871+00:00",
-  "count": 943,
+  "updatedAt": "2026-11-06T23:20:50.909667+00:00",
+  "count": 944,
   "filter": "Yok",
   "funds": [
     {
@@ -79263,6 +79263,21 @@
       ],
       "portfolioSize": 76452806.21,
       "investorCount": 128
+    },
+    {
+      "symbol": "KLK",
+      "name": "KUVEYT TÜRK PORTFÖY ELEKTRİFİKASYON KATILIM FONU",
+      "founder": "KUVEYT TÜRK PORTFÖY YÖNETİMİ A.Ş.",
+      "fundType": "YAT",
+      "price": null,
+      "priceDate": null,
+      "dailyReturn": null,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
+      "priceHistory": [],
+      "portfolioSize": null,
+      "investorCount": null
     },
     {
       "symbol": "KLS",
