@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-11-11T14:38:42.588082+00:00",
-  "count": 944,
+  "updatedAt": "2026-11-12T00:53:17.861173+00:00",
+  "count": 945,
   "filter": "Yok",
   "funds": [
     {
@@ -105071,6 +105071,21 @@
       ],
       "portfolioSize": 3355884727.22,
       "investorCount": 1003
+    },
+    {
+      "symbol": "NEE",
+      "name": "NEO PORTFÖY ENERJİ VE EMTİA ŞİRKETLERİ DEĞİŞKEN FON",
+      "founder": "NEO PORTFÖY YÖNETİMİ A.Ş.",
+      "fundType": "YAT",
+      "price": null,
+      "priceDate": null,
+      "dailyReturn": null,
+      "weeklyReturn": null,
+      "monthlyReturn": null,
+      "consecutiveUpDays": 0,
+      "priceHistory": [],
+      "portfolioSize": null,
+      "investorCount": null
     },
     {
       "symbol": "NHP",
